@@ -51,6 +51,9 @@ class USBRFIDReader:
         self.debounce_time = self.config.get('rfid', {}).get('debounce_time', 2)
         self.grabbed = False
 
+        # Buffer to accumulate card data across multiple read cycles
+        self.card_buffer = []
+
         # Build key map only if evdev is available
         self.KEY_MAP = self._build_key_map() if EVDEV_AVAILABLE else {}
 
@@ -227,13 +230,13 @@ class USBRFIDReader:
         """
         Read card ID from the IC Reader.
 
+        Accumulates keystrokes until Enter is pressed, then returns the full card ID.
+
         Returns:
-            str or None: The card ID or None if no card was read
+            str or None: The card ID or None if no complete card was read yet
         """
         if not self.device:
             return None
-
-        card_data = []
 
         try:
             import select
@@ -255,31 +258,33 @@ class USBRFIDReader:
 
                         # Enter key = end of card data
                         if keycode == evdev.ecodes.KEY_ENTER:
-                            if card_data:
-                                card_id = ''.join(card_data)
+                            if self.card_buffer:
+                                card_id = ''.join(self.card_buffer)
+                                self.card_buffer = []  # Clear buffer
 
                                 # Debounce check
                                 current_time = time.time()
                                 if card_id == self.last_card_id and \
                                    (current_time - self.last_read_time) < self.debounce_time:
                                     self.logger.debug(f"Ignoring duplicate: {card_id}")
-                                    card_data = []
                                     return None
 
                                 self.last_card_id = card_id
                                 self.last_read_time = current_time
                                 self.logger.info(f"Card scanned: {card_id}")
                                 return card_id
-                            card_data = []
+                            # Empty buffer on Enter, just clear
+                            self.card_buffer = []
 
-                        # Map keycode to character
+                        # Map keycode to character and add to buffer
                         elif keycode in self.KEY_MAP:
-                            card_data.append(self.KEY_MAP[keycode])
+                            self.card_buffer.append(self.KEY_MAP[keycode])
 
             return None
 
         except Exception as e:
             self.logger.error(f"Error reading card: {e}")
+            self.card_buffer = []  # Clear buffer on error
             return None
 
     def create_attendance_record(self, card_id):
