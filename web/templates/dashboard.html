@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atlas Edge</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: #f9fafb;
+        color: #111827;
+        min-height: 100vh;
+      }
+
+      /* Header Styles */
+      .header {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+        padding: 1.25rem 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .header-content {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .logo {
+        height: 36px;
+        width: auto;
+      }
+
+      .header-text h1 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .header-text p {
+        opacity: 0.9;
+        font-size: 0.75rem;
+        margin-top: 0.125rem;
+      }
+
+      .device-badge {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.375rem 0.875rem;
+        border-radius: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        backdrop-filter: blur(10px);
+      }
+
+      /* Container */
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      /* Alert Container */
+      .alert {
+        padding: 0.875rem 1rem;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        font-size: 0.875rem;
+        animation: slideDown 0.3s ease-out;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .alert-success {
+        background: #d1fae5;
+        color: #065f46;
+        border: 1px solid #6ee7b7;
+      }
+
+      .alert-error {
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fca5a5;
+      }
+
+      .alert-info {
+        background: #dbeafe;
+        color: #1e40af;
+        border: 1px solid #93c5fd;
+      }
+
+      /* Stats Cards Grid */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 1.25rem;
+        border-radius: 0.75rem;
+        border: 1px solid #e5e7eb;
+        transition: all 0.2s ease;
+      }
+
+      .stat-card:hover {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .stat-card-header {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+      }
+
+      .stat-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+      }
+
+      .icon-blue {
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+      }
+
+      .icon-green {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+
+      .icon-amber {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+      }
+
+      .icon-purple {
+        background: rgba(139, 92, 246, 0.1);
+        color: #8b5cf6;
+      }
+
+      .stat-change {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.125rem 0.5rem;
+        border-radius: 0.375rem;
+      }
+
+      .change-positive {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+
+      .change-neutral {
+        background: rgba(107, 114, 128, 0.1);
+        color: #6b7280;
+      }
+
+      .stat-title {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin-bottom: 0.25rem;
+        font-weight: 500;
+      }
+
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #111827;
+      }
+
+      /* Status Badge */
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.25rem 0.625rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .status-online {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      .status-offline {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .status-checking {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .status-dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background: currentColor;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      /* Action Buttons */
+      .actions {
+        display: flex;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1.25rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-weight: 500;
+        font-family: inherit;
+      }
+
+      .btn:active {
+        transform: scale(0.98);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+      }
+
+      .btn-secondary {
+        background: white;
+        color: #374151;
+        border: 1px solid #e5e7eb;
+      }
+
+      .btn-secondary:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+      }
+
+      .btn-danger {
+        background: white;
+        color: #dc2626;
+        border: 1px solid #fecaca;
+      }
+
+      .btn-danger:hover {
+        background: #fef2f2;
+        border-color: #fca5a5;
+      }
+
+      /* Records Section */
+      .records-section {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        border: 1px solid #e5e7eb;
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.25rem;
+      }
+
+      .section-header h2 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #111827;
+      }
+
+      .record-count {
+        font-size: 0.875rem;
+        color: #6b7280;
+      }
+
+      /* Table Styles */
+      .table-container {
+        overflow-x: auto;
+        border-radius: 0.5rem;
+        border: 1px solid #e5e7eb;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 0.875rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid #f3f4f6;
+      }
+
+      th {
+        background: #f9fafb;
+        font-weight: 600;
+        color: #6b7280;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      tbody tr:hover {
+        background: #f9fafb;
+      }
+
+      td {
+        font-size: 0.875rem;
+        color: #374151;
+      }
+
+      .sync-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .sync-dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+      }
+
+      .dot-synced {
+        background: #10b981;
+      }
+
+      .dot-unsynced {
+        background: #f59e0b;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      .card-id {
+        font-weight: 600;
+        color: #111827;
+        font-family: ui-monospace, monospace;
+      }
+
+      .timestamp {
+        font-size: 0.8125rem;
+        color: #6b7280;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: #9ca3af;
+      }
+
+      .loading-spinner {
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        border: 2px solid #e5e7eb;
+        border-top-color: #3b82f6;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin-bottom: 0.5rem;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+      }
+
+      .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.3;
+      }
+
+      .empty-state-text {
+        color: #6b7280;
+        font-size: 0.875rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+
+        .header-content {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.75rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .actions {
+          width: 100%;
+        }
+
+        .btn {
+          flex: 1;
+          justify-content: center;
+        }
+
+        .table-container {
+          font-size: 0.8125rem;
+        }
+
+        th,
+        td {
+          padding: 0.625rem 0.75rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="header">
+      <div class="header-content">
+        <div class="header-left">
+          <img src="static/assets/atlas.png" alt="Atlas Logo" class="logo" />
+          <div class="header-text">
+            <h1>Atlas Edge</h1>
+            <p id="device-info">Device Dashboard</p>
+          </div>
+        </div>
+        <div class="device-badge" id="device-badge">
+          <span class="status-dot"></span>
+          <span>Initializing...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Alert Container -->
+      <div id="alert-container"></div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <div class="stat-icon icon-blue">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 6v6l4 2"></path>
+              </svg>
+            </div>
+            <div class="stat-change change-neutral" id="backend-status-change">
+              --
+            </div>
+          </div>
+          <div class="stat-title">Backend Status</div>
+          <div class="stat-value" id="backend-status">
+            <span class="status-badge status-checking">
+              <span class="status-dot"></span>
+              Checking...
+            </span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <div class="stat-icon icon-purple">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </div>
+            <div class="stat-change change-neutral" id="total-change">+0</div>
+          </div>
+          <div class="stat-title">Total Records</div>
+          <div class="stat-value" id="total-records">-</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <div class="stat-icon icon-amber">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div class="stat-change change-neutral" id="unsynced-change">
+              --
+            </div>
+          </div>
+          <div class="stat-title">Pending Sync</div>
+          <div class="stat-value" id="unsynced-records">-</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <div class="stat-icon icon-green">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <div class="stat-change change-positive" id="synced-change">+0</div>
+          </div>
+          <div class="stat-title">Synced Records</div>
+          <div class="stat-value" id="synced-records">-</div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="actions">
+        <button class="btn btn-primary" onclick="triggerSync()">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path
+              d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"
+            ></path>
+          </svg>
+          Sync Now
+        </button>
+        <button class="btn btn-secondary" onclick="refreshData()">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <polyline points="23 20 23 14 17 14"></polyline>
+            <path
+              d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"
+            ></path>
+          </svg>
+          Refresh
+        </button>
+        <button class="btn btn-danger" onclick="clearSynced()">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path
+              d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+            ></path>
+          </svg>
+          Clear Synced
+        </button>
+      </div>
+
+      <!-- Records Table -->
+      <div class="records-section">
+        <div class="section-header">
+          <h2>Recent Attendance Records</h2>
+          <span class="record-count" id="record-count">0 records</span>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Card ID</th>
+                <th>Timestamp</th>
+                <th>Location</th>
+                <th>Device</th>
+              </tr>
+            </thead>
+            <tbody id="records-table">
+              <tr>
+                <td colspan="5" class="loading">
+                  <div class="loading-spinner"></div>
+                  <div>Loading records...</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let refreshInterval;
+      let previousStats = {
+        total: 0,
+        unsynced: 0,
+        synced: 0,
+      };
+
+      function showAlert(message, type = "info") {
+        const container = document.getElementById("alert-container");
+        const alert = document.createElement("div");
+        alert.className = `alert alert-${type}`;
+        alert.textContent = message;
+        container.appendChild(alert);
+
+        setTimeout(() => {
+          alert.remove();
+        }, 5000);
+      }
+
+      async function fetchStatus() {
+        try {
+          const response = await fetch("/api/status");
+          const data = await response.json();
+
+          // Update device info in header
+          if (data.device) {
+            const deviceInfo = `${data.device.name}${
+              data.device.location ? " - " + data.device.location : ""
+            }`;
+            document.getElementById("device-info").textContent = deviceInfo;
+          }
+
+          // Update backend status
+          const statusEl = document.getElementById("backend-status");
+          const deviceBadge = document.getElementById("device-badge");
+          if (data.backend_online) {
+            statusEl.innerHTML = `
+              <span class="status-badge status-online">
+                <span class="status-dot"></span>
+                Online
+              </span>
+            `;
+            deviceBadge.innerHTML = `
+              <span class="status-dot" style="background: #10b981;"></span>
+              <span>Connected</span>
+            `;
+          } else {
+            statusEl.innerHTML = `
+              <span class="status-badge status-offline">
+                <span class="status-dot"></span>
+                Offline
+              </span>
+            `;
+            deviceBadge.innerHTML = `
+              <span class="status-dot" style="background: #ef4444;"></span>
+              <span>Disconnected</span>
+            `;
+          }
+
+          // Update storage stats with change indicators
+          const currentStats = {
+            total: data.storage.total_records,
+            unsynced: data.storage.unsynced_records,
+            synced: data.storage.synced_records,
+          };
+
+          document.getElementById("total-records").textContent =
+            currentStats.total.toLocaleString();
+          document.getElementById("unsynced-records").textContent =
+            currentStats.unsynced.toLocaleString();
+          document.getElementById("synced-records").textContent =
+            currentStats.synced.toLocaleString();
+
+          // Update change indicators
+          const totalChange = currentStats.total - previousStats.total;
+          const unsyncedChange = currentStats.unsynced - previousStats.unsynced;
+          const syncedChange = currentStats.synced - previousStats.synced;
+
+          if (totalChange > 0) {
+            document.getElementById(
+              "total-change"
+            ).textContent = `+${totalChange}`;
+            document.getElementById("total-change").className =
+              "stat-change change-positive";
+          }
+
+          if (unsyncedChange !== 0) {
+            document.getElementById("unsynced-change").textContent =
+              unsyncedChange > 0 ? `+${unsyncedChange}` : `${unsyncedChange}`;
+            document.getElementById("unsynced-change").className =
+              unsyncedChange > 0
+                ? "stat-change change-neutral"
+                : "stat-change change-positive";
+          }
+
+          if (syncedChange > 0) {
+            document.getElementById(
+              "synced-change"
+            ).textContent = `+${syncedChange}`;
+            document.getElementById("synced-change").className =
+              "stat-change change-positive";
+          }
+
+          previousStats = currentStats;
+        } catch (error) {
+          console.error("Error fetching status:", error);
+          document.getElementById("backend-status").innerHTML = `
+            <span class="status-badge status-offline">
+              <span class="status-dot"></span>
+              Error
+            </span>
+          `;
+          document.getElementById("device-badge").innerHTML = `
+            <span class="status-dot" style="background: #ef4444;"></span>
+            <span>Error</span>
+          `;
+        }
+      }
+
+      async function fetchRecords() {
+        try {
+          const response = await fetch("/api/records?limit=50");
+          const data = await response.json();
+
+          const tbody = document.getElementById("records-table");
+          const recordCount = document.getElementById("record-count");
+
+          if (data.records.length === 0) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="5" class="empty-state">
+                  <div class="empty-state-icon">📭</div>
+                  <div class="empty-state-text">No attendance records yet</div>
+                </td>
+              </tr>
+            `;
+            recordCount.textContent = "0 records";
+            return;
+          }
+
+          recordCount.textContent = `${data.records.length} record${
+            data.records.length !== 1 ? "s" : ""
+          }`;
+
+          tbody.innerHTML = data.records
+            .map(
+              (record) => `
+                <tr>
+                  <td>
+                    <div class="sync-indicator">
+                      <span class="sync-dot ${
+                        record.synced ? "dot-synced" : "dot-unsynced"
+                      }"></span>
+                      <span>${record.synced ? "Synced" : "Pending"}</span>
+                    </div>
+                  </td>
+                  <td><span class="card-id">${record.card_id}</span></td>
+                  <td class="timestamp">${new Date(
+                    record.timestamp
+                  ).toLocaleString()}</td>
+                  <td>${record.location || "N/A"}</td>
+                  <td>${record.device_name || record.device_id}</td>
+                </tr>
+              `
+            )
+            .join("");
+        } catch (error) {
+          console.error("Error fetching records:", error);
+          document.getElementById("records-table").innerHTML = `
+            <tr>
+              <td colspan="5" class="empty-state">
+                <div class="empty-state-icon">⚠️</div>
+                <div class="empty-state-text">Failed to load records</div>
+              </td>
+            </tr>
+          `;
+        }
+      }
+
+      async function triggerSync() {
+        try {
+          showAlert("Initiating sync...", "info");
+          const response = await fetch("/api/sync/trigger", {
+            method: "POST",
+          });
+          const data = await response.json();
+
+          if (data.success) {
+            showAlert(
+              `Successfully synced ${data.synced} record${
+                data.synced !== 1 ? "s" : ""
+              }`,
+              "success"
+            );
+            refreshData();
+          } else {
+            showAlert(data.message || "Sync failed", "error");
+          }
+        } catch (error) {
+          console.error("Error triggering sync:", error);
+          showAlert("Failed to trigger sync", "error");
+        }
+      }
+
+      async function clearSynced() {
+        if (
+          !confirm(
+            "Are you sure you want to clear all synced records? This action cannot be undone."
+          )
+        ) {
+          return;
+        }
+
+        try {
+          const response = await fetch("/api/storage/clear", {
+            method: "POST",
+          });
+          const data = await response.json();
+
+          if (data.success) {
+            showAlert(
+              `Cleared ${data.removed} synced record${
+                data.removed !== 1 ? "s" : ""
+              }`,
+              "success"
+            );
+            refreshData();
+          } else {
+            showAlert("Failed to clear records", "error");
+          }
+        } catch (error) {
+          console.error("Error clearing records:", error);
+          showAlert("Failed to clear records", "error");
+        }
+      }
+
+      function refreshData() {
+        fetchStatus();
+        fetchRecords();
+      }
+
+      // Initialize
+      refreshData();
+
+      // Auto-refresh every 10 seconds
+      refreshInterval = setInterval(refreshData, 10000);
+    </script>
+  </body>
+</html>

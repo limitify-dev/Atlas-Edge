@@ -1,0 +1,19 @@
+[Unit]
+Description=Atlas Edge Attendance Service
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/atlas-edge
+ExecStart=/usr/bin/python3 /home/pi/atlas-edge/attendance_service.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+
+[Install]
+WantedBy=multi-user.target

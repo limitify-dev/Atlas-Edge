@@ -1,0 +1,20 @@
+[Unit]
+Description=Atlas Edge Web Portal
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/atlas-edge/web
+ExecStart=/usr/bin/python3 /home/pi/atlas-edge/web/app.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+Environment="FLASK_ENV=production"
+
+[Install]
+WantedBy=multi-user.target

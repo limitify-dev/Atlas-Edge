@@ -1,0 +1,25 @@
+{
+  "device": {
+    "name": "Atlas Edge",
+    "id": "atlas-edge-001",
+    "location": "Main Entrance"
+  },
+  "rfid": {
+    "reader_type": "USB",
+    "device_path": "/dev/hidraw0"
+  },
+  "server": {
+    "api_url": "http://172.20.10.10:4000",
+    "api_key": "atlas_acef62272d3ad32162590652ba2172cb97e53ac4e3db0ba913011232c76bae29",
+    "sync_interval": 300,
+    "timeout": 10
+  },
+  "storage": {
+    "offline_log": "/home/limitify/Developer/atlas-edge/data/offline_attendance.json",
+    "max_offline_records": 10000
+  },
+  "web": {
+    "port": 8080,
+    "host": "0.0.0.0"
+  }
+}
