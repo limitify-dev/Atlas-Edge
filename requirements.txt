@@ -12,5 +12,8 @@ requests==2.31.0
 # Data Processing
 python-dateutil==2.8.2
 
+# RFID Reader (exclusive input grabbing)
+evdev==1.6.1  # For exclusive access to HID devices (Linux only)
+
 # Optional but recommended
 gunicorn==21.2.0  # For production web server

@@ -6,7 +6,10 @@
   },
   "rfid": {
     "reader_type": "USB",
-    "device_path": "/dev/hidraw0"
+    "device_path": "/dev/input/event0",
+    "device_name": "RFID",
+    "debounce_time": 2,
+    "exclusive_access": true
   },
   "server": {
     "api_url": "http://172.20.10.10:4000",
