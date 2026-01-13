@@ -5,8 +5,8 @@ After=network.target
 [Service]
 Type=simple
 User=pi
-WorkingDirectory=/home/pi/atlas-edge/web
-ExecStart=/usr/bin/python3 /home/pi/atlas-edge/web/app.py
+WorkingDirectory=/home/limitify/atlas-edge/web
+ExecStart=/usr/bin/python3 /home/limitify/atlas-edge/web/app.py
 Restart=always
 RestartSec=10
 StandardOutput=journal

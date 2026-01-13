@@ -4343,3 +4343,685 @@
 2026-01-13 11:22:42,543 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 11:22:42] "GET /api/records?limit=50 HTTP/1.1" 200 -
 2026-01-13 11:22:42,545 - APISync - INFO - Backend API is reachable
 2026-01-13 11:22:42,550 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 11:22:42] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:43:23,540 - WebPortal - INFO - Starting Atlas Edge Web Portal v2.0 on 0.0.0.0:8080
+2026-01-13 15:44:05,016 - WebPortal - INFO - Starting Atlas Edge Web Portal v2.0 on 0.0.0.0:6100
+2026-01-13 15:44:05,084 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6100
+ * Running on http://172.20.10.10:6100
+2026-01-13 15:44:05,084 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-13 15:44:31,296 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:44:31] "GET / HTTP/1.1" 200 -
+2026-01-13 15:44:31,988 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:44:31] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:44:31,989 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:44:31] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:44:31,999 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:44:32,004 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:44:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:44:45,678 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:44:45] "GET / HTTP/1.1" 200 -
+2026-01-13 15:44:46,554 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:44:46] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:44:46,558 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:44:46] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:44:46,564 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:44:46,579 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:44:46] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:44:46,920 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:44:46] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-01-13 15:44:46,990 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:44:46] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:44:46,990 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:44:46] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:44:46,992 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:44:46,998 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:44:46] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:45:01,559 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:01] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:45:01,561 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:01] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:45:01,565 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:45:01,575 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:01] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:45:16,557 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:16] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:45:16,558 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:16] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:45:16,562 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:45:16,571 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:16] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:45:31,553 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:31] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:45:31,555 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:31] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:45:31,557 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:45:31,565 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:31] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:45:46,170 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:46] "GET /api/records?limit=100&synced=true HTTP/1.1" 200 -
+2026-01-13 15:45:46,554 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:46] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:45:46,557 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:46] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:45:46,561 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:45:46,570 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:46] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:45:46,784 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:45:46] "GET /api/records?limit=100 HTTP/1.1" 200 -
+2026-01-13 15:46:01,553 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:01] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:46:01,555 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:01] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:46:01,558 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:46:01,565 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:01] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:46:16,549 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:16] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:46:16,551 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:16] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:46:16,554 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:46:16,560 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:16] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:46:31,554 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:31] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:46:31,555 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:31] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:46:31,559 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:46:31,568 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:31] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:46:32,506 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:32] "GET /api/logs?type=api_sync&lines=100 HTTP/1.1" 200 -
+2026-01-13 15:46:34,147 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:34] "GET /api/sync/config HTTP/1.1" 200 -
+2026-01-13 15:46:34,148 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:34] "GET /api/config HTTP/1.1" 200 -
+2026-01-13 15:46:46,551 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:46] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:46:46,554 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:46] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:46:46,556 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:46:46,565 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:46] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:46:58,369 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:58] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:46:58,370 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:58] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:46:58,373 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:46:58,384 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:58] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:46:59,221 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:59] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:46:59,222 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:59] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:46:59,225 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:46:59,234 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:46:59] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:47:01,554 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:47:01] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:47:01,555 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:47:01] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:47:01,556 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:47:01,564 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:47:01] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:47:16,554 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:47:16] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:47:16,554 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:47:16] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:47:16,560 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:47:16,572 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:47:16] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:47:31,555 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:47:31] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:47:31,556 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:47:31] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:47:31,558 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:47:31,568 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:47:31] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:47:46,555 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:47:46] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:47:46,556 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:47:46] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:47:46,561 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:47:46,574 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:47:46] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:48:01,548 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:01] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:48:01,553 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:48:01,553 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:01] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:48:01,574 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:01] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:48:16,554 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:16] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:48:16,554 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:16] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:48:16,560 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:48:16,573 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:16] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:48:17,262 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:17] "GET / HTTP/1.1" 200 -
+2026-01-13 15:48:17,287 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:17] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:48:17,288 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:17] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:48:17,291 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:48:17,297 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:17] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:48:23,947 - WebPortal - INFO - Starting Atlas Edge Web Portal v2.0 on 0.0.0.0:6100
+2026-01-13 15:48:23,955 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6100
+ * Running on http://172.20.10.10:6100
+2026-01-13 15:48:23,955 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-13 15:48:26,789 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:26] "GET / HTTP/1.1" 200 -
+2026-01-13 15:48:26,815 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:26] "GET /static/assets/atlas.png HTTP/1.1" 200 -
+2026-01-13 15:48:26,818 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:26] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:48:26,820 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:26] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:48:26,832 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:48:26,839 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:26] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:48:41,822 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:41] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:48:41,823 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:41] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:48:41,826 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:48:41,834 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:41] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:48:50,936 - WebPortal - INFO - Starting Atlas Edge Web Portal v2.0 on 0.0.0.0:6100
+2026-01-13 15:48:50,945 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6100
+ * Running on http://172.20.10.10:6100
+2026-01-13 15:48:50,945 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-13 15:48:53,565 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:53] "GET / HTTP/1.1" 200 -
+2026-01-13 15:48:53,588 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:53] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:48:53,598 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:53] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:48:53,600 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:53] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:48:53,610 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:48:53,618 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:48:53] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:49:08,600 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:08] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:49:08,600 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:08] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:49:08,602 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:49:08,610 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:08] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:49:17,946 - WebPortal - INFO - Starting Atlas Edge Web Portal v2.0 on 0.0.0.0:6100
+2026-01-13 15:49:17,956 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6100
+ * Running on http://172.20.10.10:6100
+2026-01-13 15:49:17,956 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-13 15:49:20,554 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:20] "GET / HTTP/1.1" 200 -
+2026-01-13 15:49:20,575 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:20] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:49:20,580 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:20] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:49:20,582 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:20] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:49:20,592 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:49:20,602 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:20] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:49:34,327 - WebPortal - INFO - Starting Atlas Edge Web Portal v2.0 on 0.0.0.0:6100
+2026-01-13 15:49:34,335 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6100
+ * Running on http://172.20.10.10:6100
+2026-01-13 15:49:34,335 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-13 15:49:35,682 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:35] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:49:35,684 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:35] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:49:35,690 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:49:35,696 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:35] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:49:36,881 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:36] "GET / HTTP/1.1" 200 -
+2026-01-13 15:49:36,912 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:36] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:49:36,920 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:36] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:49:36,921 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:36] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:49:36,924 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:49:36,935 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:36] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:49:51,926 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:51] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:49:51,928 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:51] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:49:51,930 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:49:51,939 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:49:51] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:50:06,925 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:50:06] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:50:06,930 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:50:06] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:50:06,931 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:50:06,940 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:50:06] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:50:21,924 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:50:21] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:50:21,927 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:50:21] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:50:21,930 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:50:21,939 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:50:21] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:50:36,924 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:50:36] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:50:36,925 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:50:36] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:50:36,930 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:50:36,940 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:50:36] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:50:51,925 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:50:51] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:50:51,927 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:50:51] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:50:51,931 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:50:51,940 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:50:51] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:51:06,933 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:06] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:51:06,936 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:06] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:51:06,940 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:51:06,951 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:06] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:51:21,794 - WebPortal - INFO - Starting Atlas Edge Web Portal v2.0 on 0.0.0.0:6100
+2026-01-13 15:51:21,802 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6100
+ * Running on http://172.20.10.10:6100
+2026-01-13 15:51:21,802 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-13 15:51:21,922 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:21] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:51:21,924 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:21] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:51:21,933 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:51:21,939 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:21] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:51:24,115 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:24] "GET / HTTP/1.1" 200 -
+2026-01-13 15:51:24,142 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:24] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:51:24,145 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:24] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:51:24,149 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:24] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:51:24,150 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:51:24,157 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:24] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:51:39,150 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:39] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:51:39,151 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:39] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:51:39,156 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:51:39,166 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:39] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:51:41,105 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:41] "GET / HTTP/1.1" 200 -
+2026-01-13 15:51:41,120 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:41] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:51:41,126 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:41] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:51:41,128 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:41] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:51:41,131 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:51:41,141 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:41] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:51:42,123 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:42] "GET / HTTP/1.1" 200 -
+2026-01-13 15:51:42,138 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:42] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:51:42,145 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:42] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:51:42,148 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:42] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:51:42,149 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:51:42,157 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:42] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:51:42,823 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:42] "GET / HTTP/1.1" 200 -
+2026-01-13 15:51:42,838 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:42] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:51:42,845 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:42] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:51:42,846 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:42] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:51:42,850 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:51:42,858 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:42] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:51:43,856 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:43] "GET / HTTP/1.1" 200 -
+2026-01-13 15:51:43,871 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:43] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:51:43,878 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:43] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:51:43,878 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:43] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:51:43,883 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:51:43,891 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:43] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:51:44,671 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:44] "GET / HTTP/1.1" 200 -
+2026-01-13 15:51:44,685 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:44] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:51:44,692 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:44] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:51:44,693 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:44] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:51:44,697 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:51:44,705 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:44] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:51:59,699 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:59] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:51:59,701 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:59] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:51:59,705 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:51:59,715 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:51:59] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:52:14,699 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:52:14] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:52:14,700 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:52:14] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:52:14,705 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:52:14,713 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:52:14] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:52:29,699 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:52:29] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:52:29,700 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:52:29] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:52:29,702 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:52:29,710 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:52:29] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:52:44,699 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:52:44] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:52:44,699 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:52:44] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:52:44,705 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:52:44,715 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:52:44] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:52:59,701 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:52:59] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:52:59,706 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:52:59] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:52:59,709 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:52:59,723 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:52:59] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:53:14,697 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:53:14] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:53:14,699 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:53:14] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:53:14,702 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:53:14,714 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:53:14] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:53:29,696 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:53:29] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:53:29,699 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:53:29] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:53:29,701 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:53:29,709 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:53:29] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:53:44,697 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:53:44] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:53:44,698 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:53:44] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:53:44,703 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:53:44,714 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:53:44] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:53:59,695 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:53:59] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:53:59,698 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:53:59] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:53:59,701 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:53:59,710 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:53:59] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:14,690 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:14] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:14,693 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:14] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:14,695 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:14,704 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:14] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:24,361 - WebPortal - INFO - Starting Atlas Edge Web Portal v2.0 on 0.0.0.0:6100
+2026-01-13 15:54:24,369 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6100
+ * Running on http://172.20.10.10:6100
+2026-01-13 15:54:24,370 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-13 15:54:26,679 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:26] "GET / HTTP/1.1" 200 -
+2026-01-13 15:54:26,714 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:26] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:54:26,715 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:26] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:26,716 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:26] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:26,724 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:26,734 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:26] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:27,895 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:27] "GET / HTTP/1.1" 200 -
+2026-01-13 15:54:27,909 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:27] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:54:27,918 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:27] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:27,919 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:27] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:27,923 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:27,931 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:27] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:28,544 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:28] "GET / HTTP/1.1" 200 -
+2026-01-13 15:54:28,558 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:28] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:54:28,567 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:28] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:28,569 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:28] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:28,572 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:28,579 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:28] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:29,041 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:29] "GET / HTTP/1.1" 200 -
+2026-01-13 15:54:29,055 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:29] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:54:29,064 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:29] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:29,065 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:29] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:29,067 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:29,075 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:29] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:29,513 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:29] "GET / HTTP/1.1" 200 -
+2026-01-13 15:54:29,527 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:29] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:54:29,535 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:29] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:29,536 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:29] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:29,538 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:29,547 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:29] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:30,025 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:30] "GET / HTTP/1.1" 200 -
+2026-01-13 15:54:30,040 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:30] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:54:30,046 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:30] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:30,048 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:30] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:30,052 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:30,061 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:30] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:30,530 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:30] "GET / HTTP/1.1" 200 -
+2026-01-13 15:54:30,544 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:30] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:54:30,552 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:30] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:30,555 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:30] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:30,557 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:30,565 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:30] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:33,576 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:33] "GET / HTTP/1.1" 200 -
+2026-01-13 15:54:33,591 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:33] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:54:33,597 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:33] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:33,597 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:33] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:33,603 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:33,612 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:33] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:34,088 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:34] "GET / HTTP/1.1" 200 -
+2026-01-13 15:54:34,105 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:34] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:54:34,116 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:34] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:34,118 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:34] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:34,122 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:34,132 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:34] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:34,609 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:34] "GET / HTTP/1.1" 200 -
+2026-01-13 15:54:34,624 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:34] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:54:34,630 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:34] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:34,632 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:34] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:34,636 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:34,644 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:34] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:35,113 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:35] "GET / HTTP/1.1" 200 -
+2026-01-13 15:54:35,127 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:35] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:54:35,134 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:35] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:35,136 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:35] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:35,139 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:35,150 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:35] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:36,789 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:36] "GET / HTTP/1.1" 200 -
+2026-01-13 15:54:36,803 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:36] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:54:36,809 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:36] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:36,811 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:36] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:36,815 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:36,822 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:36] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:54:53,800 - WebPortal - INFO - Starting Atlas Edge Web Portal v2.0 on 0.0.0.0:6100
+2026-01-13 15:54:53,807 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6100
+ * Running on http://172.20.10.10:6100
+2026-01-13 15:54:53,808 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-13 15:54:55,809 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:55] "GET / HTTP/1.1" 200 -
+2026-01-13 15:54:55,832 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:55] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:54:55,836 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:55] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:54:55,839 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:55] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:54:55,852 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:54:55,861 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:54:55] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:55:10,838 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:10] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:55:10,840 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:10] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:55:10,842 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:55:10,850 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:10] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:55:25,844 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:25] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:55:25,846 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:25] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:55:25,850 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:55:25,860 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:25] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:55:30,669 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:30] "GET / HTTP/1.1" 200 -
+2026-01-13 15:55:30,691 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:30] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:55:30,703 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:30] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:55:30,704 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:30] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:55:30,708 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:55:30,716 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:30] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:55:42,881 - WebPortal - INFO - Starting Atlas Edge Web Portal v2.0 on 0.0.0.0:6100
+2026-01-13 15:55:42,889 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6100
+ * Running on http://172.20.10.10:6100
+2026-01-13 15:55:42,889 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-13 15:55:45,280 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:45] "GET / HTTP/1.1" 200 -
+2026-01-13 15:55:45,303 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:45] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:55:45,308 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:45] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:55:45,310 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:45] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:55:45,321 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:55:45,329 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:55:45] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:56:00,308 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:00] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:56:00,310 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:00] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:56:00,311 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:56:00,318 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:00] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:56:15,311 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:15] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:56:15,311 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:15] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:56:15,313 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:56:15,320 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:15] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:56:24,301 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:24] "GET / HTTP/1.1" 200 -
+2026-01-13 15:56:24,327 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:24] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:56:24,330 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:24] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:56:24,330 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:24] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:56:24,453 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:56:24,459 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:24] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:56:39,174 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:39] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:56:39,178 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:39] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:56:39,219 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:56:39,226 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:39] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:56:39,234 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:39] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:56:39,236 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:39] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:56:39,245 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:56:39,250 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:39] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:56:39,330 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:39] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:56:39,332 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:39] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:56:39,343 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:56:39,348 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:39] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:56:53,592 - WebPortal - INFO - Starting Atlas Edge Web Portal v2.0 on 0.0.0.0:6100
+2026-01-13 15:56:53,601 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6100
+ * Running on http://172.20.10.10:6100
+2026-01-13 15:56:53,601 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-13 15:56:54,338 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:54] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:56:54,341 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:54] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:56:54,394 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:56:54,402 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:54] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:56:56,884 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:56] "GET / HTTP/1.1" 200 -
+2026-01-13 15:56:56,907 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:56] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:56:56,909 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:56] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:56:56,909 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:56] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:56:56,926 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:56:56,931 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:56:56] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:57:04,752 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:04] "GET / HTTP/1.1" 200 -
+2026-01-13 15:57:04,830 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:04] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:57:04,864 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:04] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:57:04,866 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:04] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:57:04,882 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:57:04,887 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:04] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:57:10,397 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:10] "GET /api/logs?type=api_sync&lines=100 HTTP/1.1" 200 -
+2026-01-13 15:57:11,622 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:11] "GET /api/config HTTP/1.1" 200 -
+2026-01-13 15:57:11,623 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:11] "GET /api/sync/config HTTP/1.1" 200 -
+2026-01-13 15:57:19,871 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:19] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:57:19,875 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:19] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:57:19,901 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:57:19,909 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:19] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:57:34,869 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:34] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:57:34,871 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:34] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:57:34,911 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:57:34,919 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:34] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:57:35,788 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:35] "GET /api/logs?type=api_sync&lines=100 HTTP/1.1" 200 -
+2026-01-13 15:57:49,875 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:49] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:57:49,876 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:49] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:57:49,907 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:57:49,912 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:57:49] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:58:04,868 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:04] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:58:04,870 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:04] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:58:04,892 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:58:04,900 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:04] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:58:19,869 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:19] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:58:19,872 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:19] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:58:19,897 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:58:19,905 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:19] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:58:34,868 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:34] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:58:34,869 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:34] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:58:34,896 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:58:34,906 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:34] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:58:48,142 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:48] "GET /api/logs?type=api_sync&lines=100 HTTP/1.1" 200 -
+2026-01-13 15:58:49,188 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:49] "GET /api/sync/config HTTP/1.1" 200 -
+2026-01-13 15:58:49,188 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:49] "GET /api/config HTTP/1.1" 200 -
+2026-01-13 15:58:49,862 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:49] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:58:49,864 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:49] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:58:49,889 - APISync - INFO - Backend API is reachable. Device status: ACTIVE
+2026-01-13 15:58:49,896 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:58:49] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:59:01,655 - WebPortal - INFO - Starting Atlas Edge Web Portal v2.0 on 0.0.0.0:6100
+2026-01-13 15:59:01,661 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:6100
+ * Running on http://172.20.10.10:6100
+2026-01-13 15:59:01,662 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-01-13 15:59:04,866 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:04] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:59:04,870 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:04] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:59:04,882 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:59:04,894 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:04] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:59:05,092 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:05] "GET / HTTP/1.1" 200 -
+2026-01-13 15:59:05,113 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:05] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:59:05,115 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:05] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:59:05,121 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:59:05,122 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:05] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:59:05,128 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:05] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:59:06,148 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:06] "GET / HTTP/1.1" 200 -
+2026-01-13 15:59:06,162 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:06] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:59:06,167 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:06] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:59:06,169 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:06] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:59:06,172 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:59:06,179 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:06] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:59:07,118 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:07] "GET / HTTP/1.1" 200 -
+2026-01-13 15:59:07,132 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:07] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:59:07,149 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:07] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:59:07,150 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:07] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:59:07,152 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:59:07,158 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:07] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:59:07,697 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:07] "GET / HTTP/1.1" 200 -
+2026-01-13 15:59:07,708 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:07] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:59:07,715 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:07] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:59:07,716 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:07] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:59:07,717 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:59:07,727 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:07] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:59:14,975 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:14] "GET / HTTP/1.1" 200 -
+2026-01-13 15:59:15,051 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:15] "[36mGET /static/assets/atlas.png HTTP/1.1[0m" 304 -
+2026-01-13 15:59:15,082 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:15] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:59:15,084 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:15] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:59:15,086 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:59:15,092 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:15] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:59:30,091 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:30] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:59:30,092 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:30] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:59:30,095 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:59:30,105 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:30] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:59:42,580 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:42] "GET /api/logs?type=api_sync&lines=100 HTTP/1.1" 200 -
+2026-01-13 15:59:45,087 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:45] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:59:45,088 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:45] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:59:45,093 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:59:45,101 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:45] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:59:46,457 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:46] "GET /api/sync/config HTTP/1.1" 200 -
+2026-01-13 15:59:46,457 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:46] "GET /api/config HTTP/1.1" 200 -
+2026-01-13 15:59:48,736 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:48] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:59:48,738 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:48] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:59:48,740 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:59:48,747 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:48] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:59:49,686 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:49] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:59:49,687 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:49] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:59:49,688 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:59:49,693 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:49] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:59:50,123 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:50] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 15:59:50,125 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:50] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 15:59:50,131 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:59:50,140 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:50] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 15:59:50,609 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 15:59:50,610 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 15:59:50] "[35m[1mPOST /api/sync/trigger HTTP/1.1[0m" 503 -
+2026-01-13 16:00:00,082 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:00:00] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:00:00,082 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:00:00] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:00:00,085 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:00:00,092 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:00:00] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:00:15,660 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:00:15] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:00:15,664 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:00:15] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:00:15,668 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:00:15,677 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:00:15] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:00:30,661 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:00:30] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:00:30,662 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:00:30] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:00:30,667 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:00:30,678 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:00:30] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:00:45,655 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:00:45] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:00:45,657 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:00:45] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:00:45,659 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:00:45,664 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:00:45] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:01:00,661 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:01:00] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:01:00,662 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:01:00] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:01:00,668 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:01:00,673 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:01:00] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:01:25,146 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:01:25] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:01:25,148 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:01:25] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:01:25,154 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:01:25,164 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:01:25] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:01:30,085 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:01:30] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:01:30,090 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:01:30] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:01:30,093 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:01:30,101 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:01:30] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:01:31,118 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:01:31] "GET /api/logs?type=api_sync&lines=100 HTTP/1.1" 200 -
+2026-01-13 16:01:45,663 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:01:45] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:01:45,666 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:01:45] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:01:45,669 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:01:45,677 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:01:45] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:02:00,653 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:02:00] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:02:00,654 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:02:00] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:02:00,657 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:02:00,664 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:02:00] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:02:15,663 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:02:15] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:02:15,667 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:02:15] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:02:15,674 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:02:15,686 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:02:15] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:02:30,652 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:02:30] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:02:30,654 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:02:30] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:02:30,656 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:02:30,665 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:02:30] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:03:32,667 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:03:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:03:32,670 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:03:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:03:32,674 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:03:32,685 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:03:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:04:32,668 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:04:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:04:32,671 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:04:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:04:32,676 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:04:32,687 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:04:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:05:32,658 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:05:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:05:32,661 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:05:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:05:32,672 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:05:32,680 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:05:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:06:32,667 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:06:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:06:32,671 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:06:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:06:32,678 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:06:32,691 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:06:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:07:32,662 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:07:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:07:32,663 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:07:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:07:32,670 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:07:32,680 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:07:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:08:32,660 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:08:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:08:32,661 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:08:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:08:32,664 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:08:32,673 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:08:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:09:32,652 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:09:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:09:32,655 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:09:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:09:32,657 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:09:32,664 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:09:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:10:32,645 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:10:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:10:32,646 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:10:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:10:32,652 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:10:32,660 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:10:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:11:32,658 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:11:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:11:32,664 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:11:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:11:32,673 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:11:32,682 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:11:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:12:32,640 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:12:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:12:32,640 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:12:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:12:32,644 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:12:32,652 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:12:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:13:32,643 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:13:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:13:32,644 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:13:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:13:32,651 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:13:32,680 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:13:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:14:32,637 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:14:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:14:32,640 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:14:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:14:32,645 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:14:32,654 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:14:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:15:32,643 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:15:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:15:32,645 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:15:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:15:32,652 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:15:32,661 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:15:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:16:32,631 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:16:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:16:32,633 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:16:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:16:32,636 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:16:32,646 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:16:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:17:32,635 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:17:32] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:17:32,635 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:17:32] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:17:32,641 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:17:32,651 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:17:32] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:18:12,655 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:12] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:18:12,656 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:12] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:18:12,660 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:18:12,666 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:12] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:18:15,050 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:15] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:18:15,052 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:15] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:18:15,054 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:18:15,064 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:15] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:18:15,303 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:15] "GET /api/records?limit=100&synced=true HTTP/1.1" 200 -
+2026-01-13 16:18:16,024 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:16] "GET /api/records?limit=100 HTTP/1.1" 200 -
+2026-01-13 16:18:24,119 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:24] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:18:24,121 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:24] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:18:24,122 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:18:24,128 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:24] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:18:24,545 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:24] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:18:24,547 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:24] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:18:24,550 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:18:24,558 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:24] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:18:27,710 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:27] "GET /api/logs?type=api_sync&lines=100 HTTP/1.1" 200 -
+2026-01-13 16:18:28,552 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:28] "GET /api/sync/config HTTP/1.1" 200 -
+2026-01-13 16:18:28,553 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:28] "GET /api/config HTTP/1.1" 200 -
+2026-01-13 16:18:29,877 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:29] "GET /api/logs?type=api_sync&lines=100 HTTP/1.1" 200 -
+2026-01-13 16:18:30,047 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:30] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:18:30,050 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:30] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:18:30,050 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:18:30,057 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:30] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:18:40,988 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:40] "GET /api/records?limit=100&synced=true HTTP/1.1" 200 -
+2026-01-13 16:18:42,005 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:42] "GET /api/records?limit=100&synced=false HTTP/1.1" 200 -
+2026-01-13 16:18:43,158 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:43] "GET /api/records?limit=100 HTTP/1.1" 200 -
+2026-01-13 16:18:45,049 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:45] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:18:45,051 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:45] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:18:45,057 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:18:45,067 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:45] "GET /api/status HTTP/1.1" 200 -
+2026-01-13 16:18:46,897 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:46] "GET /api/records?limit=100&search=d HTTP/1.1" 200 -
+2026-01-13 16:18:47,310 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:47] "GET /api/records?limit=100&search=dd HTTP/1.1" 200 -
+2026-01-13 16:18:50,450 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:50] "GET /api/records?limit=100 HTTP/1.1" 200 -
+2026-01-13 16:18:56,258 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:56] "GET /api/logs?type=api_sync&lines=100 HTTP/1.1" 200 -
+2026-01-13 16:18:57,018 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:57] "GET /api/sync/config HTTP/1.1" 200 -
+2026-01-13 16:18:57,019 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:18:57] "GET /api/config HTTP/1.1" 200 -
+2026-01-13 16:19:00,053 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:19:00] "GET /api/records?limit=5 HTTP/1.1" 200 -
+2026-01-13 16:19:00,056 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:19:00] "GET /api/records/stats HTTP/1.1" 200 -
+2026-01-13 16:19:00,058 - APISync - WARNING - Backend API unreachable: HTTPConnectionPool(host='172.20.10.10', port=4000): Max retries exceeded with url: /device-api/health (Caused by NewConnectionError("HTTPConnection(host='172.20.10.10', port=4000): Failed to establish a new connection: [Errno 61] Connection refused"))
+2026-01-13 16:19:00,068 - werkzeug - INFO - 127.0.0.1 - - [13/Jan/2026 16:19:00] "GET /api/status HTTP/1.1" 200 -

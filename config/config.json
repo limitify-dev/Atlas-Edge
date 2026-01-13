@@ -11,15 +11,24 @@
   "server": {
     "api_url": "http://172.20.10.10:4000",
     "api_key": "atlas_acef62272d3ad32162590652ba2172cb97e53ac4e3db0ba913011232c76bae29",
-    "sync_interval": 300,
     "timeout": 10
   },
+  "sync": {
+    "mode": "batch",
+    "batch_size": 50,
+    "sync_interval": 300,
+    "min_records_for_sync": 1,
+    "retry_failed_after": 60,
+    "max_retries": 3,
+    "immediate_sync": false
+  },
   "storage": {
-    "offline_log": "/home/limitify/Developer/atlas-edge/data/offline_attendance.json",
-    "max_offline_records": 10000
+    "offline_log": "/Users/aldrick/Developer/Atlas/Atlas-Edge/data/offline_attendance.json",
+    "max_offline_records": 10000,
+    "cleanup_after_sync": true
   },
   "web": {
-    "port": 8080,
+    "port": 6100,
     "host": "0.0.0.0"
   }
 }
