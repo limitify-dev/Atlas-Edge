@@ -1,10 +1,6 @@
 # Atlas Edge Requirements
 # Python 3.7+
 
-# RFID Reader
-mfrc522==0.0.7
-RPi.GPIO==0.7.1
-
 # Web Framework
 Flask==2.3.2
 Flask-CORS==4.0.0
