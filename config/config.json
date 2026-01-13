@@ -6,8 +6,8 @@
   },
   "rfid": {
     "reader_type": "USB",
-    "device_path": "/dev/input/event0",
-    "device_name": "RFID",
+    "device_path": null,
+    "device_name": "IC Reader",
     "debounce_time": 2,
     "exclusive_access": true
   },
