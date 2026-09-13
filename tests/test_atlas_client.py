@@ -86,6 +86,19 @@ def test_login_bad_credentials_raises_auth_error():
         client.login("t@school.io", "wrong")
 
 
+def test_login_network_failure_raises_atlas_error_not_raw_httpx_error():
+    # A misconfigured/unreachable ATLAS_EDGE_ATLAS_BASE_URL must surface as
+    # the login page's existing "Could not reach Atlas" branch, not crash
+    # the request with an unhandled httpx exception (a raw 500).
+    def handler(request):
+        raise httpx.ConnectError("Connection refused", request=request)
+
+    client, _ = make_client(handler)
+    with pytest.raises(AtlasError) as exc_info:
+        client.login("t@school.io", "pw")
+    assert not isinstance(exc_info.value, AtlasAuthError)
+
+
 def test_login_response_without_access_token_raises():
     def handler(request):
         if request.url.path == "/auth/login":

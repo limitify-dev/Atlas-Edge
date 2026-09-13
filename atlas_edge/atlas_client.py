@@ -235,9 +235,12 @@ class AtlasClient:
         return self._store.get_token() is not None
 
     def login(self, identifier: str, password: str) -> None:
-        resp = self._http.post(
-            "/auth/login", json={"identifier": identifier, "password": password}
-        )
+        try:
+            resp = self._http.post(
+                "/auth/login", json={"identifier": identifier, "password": password}
+            )
+        except httpx.HTTPError as exc:
+            raise AtlasError(f"Could not reach Atlas at {self._api_root}: {exc}") from exc
         if resp.status_code == 401:
             raise AtlasAuthError("Atlas rejected those credentials.")
         if resp.status_code >= 400:
