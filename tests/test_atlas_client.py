@@ -16,6 +16,7 @@ import pytest
 
 from atlas_edge.atlas_client import (
     AtlasAuthError,
+    AtlasCardUnknownError,
     AtlasClient,
     AtlasError,
     AtlasPushError,
@@ -273,13 +274,28 @@ def test_push_network_error_is_retryable_pusherror():
 
 
 def test_push_4xx_is_not_retryable_pusherror():
-    # e.g. an unknown/inactive card — retrying the same payload won't help,
-    # but the event still must not be silently dropped.
+    # e.g. a malformed request — retrying the same payload won't help, but
+    # the event still must not be silently dropped (unlike a 404, below).
     store = MemoryTokenStore()
     store.save_device_key("dkey")
-    client, _ = make_client(lambda r: httpx.Response(404, text="card not found"), store=store)
+    client, _ = make_client(lambda r: httpx.Response(400, text="bad request"), store=store)
     with pytest.raises(AtlasPushError):
         client.push_attendance_event(card_number="1", name="x", timestamp="t")
+
+
+def test_push_404_raises_card_unknown_not_pusherror():
+    # school-entry.service.ts's recordScanByCard 404s for an unknown,
+    # inactive, or unassigned card — that's never going to resolve by
+    # retrying, so it must be a distinct, non-retryable error type.
+    store = MemoryTokenStore()
+    store.save_device_key("dkey")
+    client, _ = make_client(
+        lambda r: httpx.Response(404, text="Card not found, inactive, or not a student card"),
+        store=store,
+    )
+    with pytest.raises(AtlasCardUnknownError) as exc_info:
+        client.push_attendance_event(card_number="9999", name="x", timestamp="t")
+    assert not isinstance(exc_info.value, AtlasPushError)
 
 
 # ── 401 -> refresh -> retry (admin JWT, used by /cards) ────────────────

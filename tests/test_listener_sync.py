@@ -61,8 +61,9 @@ class FakeDevice:
 
 
 class FakeAtlas:
-    def __init__(self, assignments=None):
+    def __init__(self, assignments=None, unknown_cards=frozenset()):
         self._assignments = assignments or []
+        self._unknown_cards = set(unknown_cards)
         self.heartbeats = 0
         self.pushed = []
 
@@ -79,6 +80,10 @@ class FakeAtlas:
         self.heartbeats += 1
 
     def push_attendance_event(self, *, card_number, name, timestamp):
+        if card_number in self._unknown_cards:
+            from atlas_edge.atlas_client import AtlasCardUnknownError
+
+            raise AtlasCardUnknownError(f"Card {card_number} is not known to Atlas.")
         self.pushed.append((card_number, name, timestamp))
 
     def close(self):
@@ -220,3 +225,21 @@ def test_flush_skips_the_heartbeat_while_the_device_is_disconnected(tmp_path):
     storage.set_device_status(connected=False)
     listener._flush_once()
     assert atlas.heartbeats == 0
+
+
+def test_flush_drops_a_tap_for_a_card_unknown_to_atlas_without_retrying(tmp_path):
+    atlas = FakeAtlas(unknown_cards={"9999"})
+    listener, storage = make_listener(tmp_path, FakeDevice(), atlas)
+    storage.set_device_status(connected=True)
+    storage.enqueue_event(
+        card_number="9999", name=None, occurred_at="2026-01-01T08:00:00+00:00",
+        source="live",
+    )
+    assert storage.queue_stats()["pending_total"] == 1
+
+    listener._flush_once()
+
+    # gone outright — not marked failed/pending for another attempt
+    assert storage.queue_stats().get("pending_total", 0) == 0
+    assert storage.queue_stats().get("failed", 0) == 0
+    assert atlas.pushed == []  # the fake never recorded it as sent either

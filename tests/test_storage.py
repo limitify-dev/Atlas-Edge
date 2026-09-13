@@ -158,6 +158,18 @@ def test_mark_sent_removes_from_pending(tmp_path):
     assert s.queue_stats().get("sent") == 1
 
 
+def test_delete_event_removes_it_outright_not_as_failed(tmp_path):
+    s = fresh(tmp_path)
+    s.enqueue_event(card_number="1", name="x", occurred_at="t1", source="live")
+    (row,) = s.due_events()
+    s.delete_event(int(row["id"]))
+    assert s.due_events() == []
+    stats = s.queue_stats()
+    assert stats.get("failed", 0) == 0
+    assert stats.get("pending_total", 0) == 0
+    assert stats.get("sent", 0) == 0  # not recorded as sent either — just gone
+
+
 def test_command_queue_claim_is_one_shot(tmp_path):
     s = fresh(tmp_path)
     cid = s.enqueue_command("bulk_sync", {}, requested_by="t@x.io")

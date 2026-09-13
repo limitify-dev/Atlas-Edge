@@ -87,6 +87,12 @@ class AtlasPushError(AtlasError):
     """A request failed in a way that should be retried later (network / 5xx)."""
 
 
+class AtlasCardUnknownError(AtlasError):
+    """Atlas doesn't recognise this card at all (not found, inactive, or not
+    assigned to a student) — retrying won't change that, so the caller
+    should drop the event instead of scheduling another attempt."""
+
+
 # ── token persistence ──────────────────────────────────────────────────────
 class TokenStore(Protocol):
     """How the client persists its session + device key. Backed by SQLite in
@@ -406,11 +412,18 @@ class AtlasClient:
             "deviceId": self._device_id,
         }
         resp = self._device_request("POST", "/school-entry/scan", json=payload)
+        if resp.status_code == 404:
+            # school-entry.service.ts's recordScanByCard raises NotFoundException
+            # for exactly this: no such card, an inactive one, or one never
+            # assigned to a student. The card isn't going to become known by
+            # retrying, so the caller should drop the event outright.
+            raise AtlasCardUnknownError(f"Card {card_number} is not known to Atlas.")
         if resp.status_code >= 500 or resp.status_code == 429:
             raise AtlasPushError(f"Atlas returned HTTP {resp.status_code}; will retry.")
         if resp.status_code >= 400:
-            # 4xx — e.g. unknown/inactive card — retrying won't help, but we
-            # still must not drop it silently.
+            # Other 4xx — e.g. a malformed request — retrying won't help
+            # either, but unlike an unknown card this isn't expected/routine,
+            # so keep surfacing it instead of silently dropping it.
             raise AtlasPushError(
                 f"Atlas rejected the event: HTTP {resp.status_code} {resp.text[:200]}"
             )

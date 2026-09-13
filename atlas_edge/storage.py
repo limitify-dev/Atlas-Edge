@@ -294,6 +294,13 @@ class Storage:
                 (error[:500], next_attempt_at, event_id),
             )
 
+    def delete_event(self, event_id: int) -> None:
+        """Drop an event outright — no retry, no record kept. For a tap that
+        will never succeed no matter how many times it's retried (e.g. the
+        card is unknown to Atlas), rather than one that just failed once."""
+        with self._conn() as conn:
+            conn.execute("DELETE FROM event_queue WHERE id=?", (event_id,))
+
     def queue_stats(self) -> dict:
         with self._conn() as conn:
             rows = conn.execute(

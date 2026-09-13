@@ -27,7 +27,7 @@ import threading
 import time
 from datetime import datetime, timezone
 
-from .atlas_client import AtlasAuthError, AtlasError, AtlasPushError
+from .atlas_client import AtlasAuthError, AtlasCardUnknownError, AtlasError, AtlasPushError
 from .attendance import classify_direction
 from .config import Settings, get_settings
 from .device import DeviceUnavailable
@@ -485,6 +485,9 @@ class Listener:
                 log.warning("Device not registered with Atlas — pausing flush (%d events buffered)",
                             self.db.queue_stats().get("pending_total", 0))
                 return
+            except AtlasCardUnknownError as exc:
+                self.db.delete_event(int(row["id"]))
+                log.warning("Event #%s dropped — %s (not retrying)", row["id"], exc)
             except AtlasPushError as exc:
                 delay = min(
                     self.s.push_backoff_max_seconds,
