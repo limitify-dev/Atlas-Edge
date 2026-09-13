@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atlas Edge</title>
+  <link rel="icon" href="/static/favicon.png">
+  <link rel="stylesheet" href="/static/tailwind.css?v={{ asset_version('tailwind.css') }}">
+</head>
+<body class="body-font antialiased">
+<div class="flex min-h-dvh flex-col bg-[#100C08] lg:grid lg:h-screen lg:grid-cols-2 lg:overflow-hidden">
+
+  {# ── Left panel: brand wash + copy, matches atlas.ui's login aside ── #}
+  <aside class="relative hidden flex-col justify-between overflow-hidden bg-no-repeat p-12 lg:flex xl:p-16"
+         style="background-image: radial-gradient(130% 120% at 0% 0%, rgba(66,122,181,.30), transparent 52%),
+                                   linear-gradient(160deg, rgba(18,16,12,.55) 0%, rgba(13,25,40,.55) 60%, rgba(11,21,36,.6) 100%),
+                                   url('/static/terminal.png');
+                background-size: cover, cover, cover;
+                background-position: 0% 0%, center, 10% 55%;">
+    <div class="relative z-10 flex items-center gap-3" style="font-size: clamp(20px, 5vw, 26px);">
+      <img src="/static/atlas-icon.png" alt="Atlas"
+           class="h-8 w-8 shrink-0 rounded-xl bg-white/90 p-1.5 shadow-[0_6px_20px_rgba(20,34,50,0.18)] ring-1 ring-white/70 sm:h-9 sm:w-9 md:h-10 md:w-10">
+      <span class="atlas-brand text-2xl text-white">Atlas&nbsp;Edge</span>
+    </div>
+
+    <div class="relative z-10">
+      <h1 class="atlas-font text-white font-semibold leading-[1.08] tracking-[-0.03em]" style="font-size: clamp(32px,3vw,48px);">
+        Attendance,<br>on the ground.
+      </h1>
+      <p class="body-font mt-3 max-w-sm text-[15px] leading-[1.75] text-white/55">
+        The on-site gateway between your terminal and Atlas — enrol
+        cards, watch the queue, and keep every tap flowing to the platform.
+      </p>
+    </div>
+  </aside>
+
+  {# ── Right panel: form ── #}
+  <article class="flex min-h-dvh flex-col justify-center overflow-y-auto bg-[#0C1523] px-6 py-8 sm:px-12 lg:min-h-0 xl:px-16">
+    <div class="mb-8 flex items-center gap-3 lg:hidden">
+      <img src="/static/atlas-icon.png" alt="Atlas" class="h-8 w-8 rounded-xl bg-white/90 p-1.5">
+      <span class="atlas-brand text-2xl text-white">Atlas&nbsp;Edge</span>
+    </div>
+
+    <div class="mb-7">
+      <h2 class="atlas-font text-[28px] font-semibold tracking-[-0.02em] text-white">Sign in</h2>
+      <p class="body-font mt-1.5 text-[14px] text-[#5A7394]">
+        {% if atlas_driver == 'mock' %}
+          Local test mode — any email and password will do.
+        {% else %}
+          Use your Atlas account. This gateway reuses that session for every
+          call it makes to Atlas.
+        {% endif %}
+      </p>
+    </div>
+
+    {% if error %}
+    <p class="body-font mb-4 rounded-lg border border-red-500/20 bg-red-500/10 px-3.5 py-2.5 text-[12px] text-red-400">{{ error }}</p>
+    {% endif %}
+
+    <form class="flex flex-col gap-4" method="post" action="/login">
+      <label class="body-font text-[12px] font-medium text-[#5A7394]">
+        Email
+        <input id="email" name="email" type="email" autocomplete="username" required autofocus
+               placeholder="you@school.edu"
+               class="mt-1.5 w-full rounded-lg border border-white/8 bg-[#080F1A] px-3.5 py-2.5 text-[16px] text-white outline-none transition-colors placeholder:text-[#243650] focus:border-[#427AB5] sm:text-[13px]">
+      </label>
+      <label class="body-font text-[12px] font-medium text-[#5A7394]">
+        Password
+        <input id="password" name="password" type="password" autocomplete="current-password" required
+               placeholder="Enter your password"
+               class="mt-1.5 w-full rounded-lg border border-white/8 bg-[#080F1A] px-3.5 py-2.5 text-[16px] text-white outline-none transition-colors placeholder:text-[#243650] focus:border-[#427AB5] sm:text-[13px]">
+      </label>
+      <button type="submit"
+              class="body-font mt-1 w-full rounded-lg bg-[#427AB5] py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-[#3A6DA0] active:bg-[#335F8C]">
+        Sign in
+      </button>
+    </form>
+
+    <p class="body-font mt-6 text-[11px] leading-[1.7] text-[#3F5570]">
+      Atlas <code class="text-[#93A7BF]">{{ atlas_base_url }}</code> ·
+      School <code class="text-[#93A7BF]">{{ school_id }}</code> ·
+      <code class="text-[#93A7BF]">{{ 'MOCK' if mock_mode else 'live' }}</code>
+    </p>
+  </article>
+</div>
+</body>
+</html>

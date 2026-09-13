@@ -1,0 +1,26 @@
+[Unit]
+Description=Atlas-Edge — F18 tap listener & device owner
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=atlas-edge
+Group=atlas-edge
+WorkingDirectory=/opt/atlas-edge
+EnvironmentFile=/opt/atlas-edge/.env
+ExecStart=/opt/atlas-edge/.venv/bin/python -m atlas_edge.listener
+Restart=always
+RestartSec=5
+# Give the F18/network a moment on boot before the first connect attempt.
+ExecStartPre=/bin/sleep 5
+
+# Light hardening — the service only needs its own working dir writable.
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/atlas-edge/data
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

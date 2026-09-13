@@ -1,0 +1,13 @@
+{
+  "name": "atlas-edge-web",
+  "private": true,
+  "description": "Build-time only — compiles the Tailwind CSS bundle for the Atlas-Edge web UI. Not a runtime dependency; the Pi only ever serves the compiled atlas_edge/web/static/tailwind.css.",
+  "scripts": {
+    "build:css": "tailwindcss -i ./atlas_edge/web/static/tailwind-src.css -o ./atlas_edge/web/static/tailwind.css --minify",
+    "watch:css": "tailwindcss -i ./atlas_edge/web/static/tailwind-src.css -o ./atlas_edge/web/static/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4",
+    "tailwindcss": "^4"
+  }
+}

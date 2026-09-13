@@ -1,0 +1,64 @@
+/* Source for the compiled atlas_edge/web/static/tailwind.css bundle — run
+   `npm run build:css` (or `watch:css` while iterating) after editing this
+   file or any class names in the Jinja templates. The Pi never runs Node;
+   only the compiled output is served at runtime.
+
+   Same design tokens/fonts as atlas.ui's src/app/globals.css, trimmed to
+   what this app actually uses. */
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss";
+@source "../templates";
+
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("https://cdn.fontshare.com/wf/XMXWOHABYLQDJ42L65EFRYNVRY37HQCB/B2O4O6V3JMFM2WDCYQI3A47L5U4THDUL/WN5274VQ3AUBDFP74GB4EC4XYJ3EKVNE.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("https://cdn.fontshare.com/wf/ZX6AQLSFYVDPN2URWO2MQFGTYYOHIS64/TPYPKOYWFQVNJHLLRXD4KFYX4LUOUW4Z/6QH2ALVTTK7IRVO5MYOQQ3OZNXW5SSS3.woff2")
+    format("woff2");
+  font-weight: 800;
+  font-display: swap;
+  font-style: normal;
+}
+
+.atlas-font {
+  font-family: "Cabinet Grotesk", system-ui, sans-serif;
+}
+.atlas-brand {
+  font-family: "Cabinet Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.body-font {
+  font-family: "DM Sans", system-ui, sans-serif;
+}
+
+html,
+body {
+  background: #ffffff;
+  color: #171717;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(18, 33, 52, 0.42) transparent;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(18, 33, 52, 0.42);
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(18, 33, 52, 0.62);
+}

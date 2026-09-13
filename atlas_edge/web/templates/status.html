@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% import "_ui.html" as ui %}
+{% block title %}{% endblock %}
+{% block topbar_title %}Status{% endblock %}
+{% block container_class %}max-w-none{% endblock %}
+{% block body %}
+
+<div data-autorefresh data-interval="5000" class="space-y-5">
+
+  {# ── middle column (metrics + recent taps) with the device-jobs rail docked to the
+       far right of the content area, opposite the left nav ── #}
+  <div class="flex flex-col gap-5 xl:flex-row xl:items-start xl:gap-6">
+  <div class="min-w-0 flex-1 space-y-5 xl:mx-auto xl:max-w-3xl">
+
+  {# ── metric strip — atlas.ui's MetricStrip: one joined, hairline-divided panel ── #}
+  <section class="overflow-hidden rounded-3xl bg-gradient-to-b from-white to-[#F7FAFF]">
+    <div class="grid grid-cols-1 gap-px bg-zinc-200/70 sm:grid-cols-2 xl:grid-cols-4">
+      <div class="bg-gradient-to-b from-white to-[#F7FAFF] p-4 sm:p-5">
+        <p class="body-font text-sm text-zinc-500">F18 terminal</p>
+        <div class="mt-2 flex items-center justify-between gap-2">
+          <div>
+            {% if device.connected %}
+              {{ ui.badge("Connected", "ok") }}
+            {% else %}
+              {{ ui.badge("Offline", "bad") }}
+            {% endif %}
+            <p class="body-font mt-2 text-xs text-zinc-400">
+              Last seen <span title="{{ device.last_seen or '' }}">{{ device.last_seen | timeago }}</span>
+            </p>
+          </div>
+          <div class="inline-flex h-10 w-10 items-center justify-center rounded-full {{ 'bg-emerald-50 text-emerald-700' if device.connected else 'bg-rose-50 text-rose-700' }}">
+            {{ ui.icon("wifi" if device.connected else "wifi-off", 18) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-b from-white to-[#F7FAFF] p-4 sm:p-5">
+        <p class="body-font text-sm text-zinc-500">Buffered events</p>
+        <div class="mt-2 flex items-center justify-between gap-2">
+          <div>
+            <p class="atlas-font text-3xl font-black tracking-tight text-[#1A1020]">{{ queue.pending_total or 0 }}</p>
+            <p class="body-font mt-1 text-xs text-zinc-400">{{ queue.sent or 0 }} sent · {{ queue.failed or 0 }} retrying</p>
+          </div>
+          <div class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sky-50 text-sky-700">
+            {{ ui.icon("inbox", 18) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-b from-white to-[#F7FAFF] p-4 sm:p-5">
+        <p class="body-font text-sm text-zinc-500">Atlas session</p>
+        <div class="mt-2 flex items-center justify-between gap-2">
+          <div>
+            {% if atlas_authenticated %}
+              {{ ui.badge("Active", "ok") }}
+            {% else %}
+              {{ ui.badge("Signed out", "warn") }}
+            {% endif %}
+            {% if mock_mode %}
+            <p class="body-font mt-2 text-xs text-zinc-400">{{ mock_atlas_events }} events received · mock</p>
+            {% elif not device_registered and not atlas_authenticated %}
+            <p class="body-font mt-2 text-xs text-amber-600">Device not registered — sign in once to enable pushes</p>
+            {% elif not device_registered %}
+            <p class="body-font mt-2 text-xs text-amber-600">Device still not registered — sign in must be an Admin or Super Admin account</p>
+            {% endif %}
+          </div>
+          <div class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#EEF4FB] text-[#427AB5]">
+            {{ ui.icon("radio", 18) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-b from-white to-[#F7FAFF] p-4 sm:p-5">
+        <p class="body-font text-sm text-zinc-500">Last reconcile</p>
+        <div class="mt-2 flex items-center justify-between gap-2">
+          <div>
+            <p class="atlas-font text-xl font-black tracking-tight text-[#1A1020]" title="{{ last_reconcile_at or '' }}">
+              {{ last_reconcile_at | timeago if last_reconcile_at else "Not yet" }}
+            </p>
+            <p class="body-font mt-1 text-xs text-zinc-400">Background sync</p>
+          </div>
+          <div class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-500">
+            {{ ui.icon("clock", 18) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# ── recent taps (live feed) ── #}
+  <section>
+    <div class="mb-3 flex items-baseline justify-between gap-3">
+      <div>
+        <h2 class="atlas-font text-[15px] font-black tracking-tight text-[#1A1020]">Recent taps</h2>
+        <p class="body-font mt-0.5 text-xs text-zinc-500">Latest events received from the terminal.</p>
+      </div>
+    </div>
+    <section class="rounded-2xl border border-zinc-200/70 bg-white p-4 sm:p-5">
+      {% if recent_events %}
+      <div class="overflow-x-auto">
+        <table class="w-full body-font text-sm" style="min-width:680px">
+          <thead>
+            <tr class="text-left text-zinc-400">
+              <th class="px-3 py-2 font-medium">Card holder</th>
+              <th class="px-3 py-2 font-medium">Card number</th>
+              <th class="px-3 py-2 font-medium">Direction</th>
+              <th class="px-3 py-2 font-medium">Source</th>
+              <th class="px-3 py-2 font-medium">When</th>
+              <th class="px-3 py-2 font-medium">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for e in recent_events[:10] %}
+            {% set tint = "bg-emerald-50 text-emerald-600" if e.status == 'sent' else ("bg-amber-50 text-amber-600" if e.status == 'failed' else "bg-zinc-100 text-zinc-500") %}
+            <tr class="border-t border-zinc-100 text-[#1A1020] transition-colors hover:bg-zinc-50">
+              <td class="px-3 py-3">
+                <div class="flex items-center gap-3">
+                  <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full {{ tint }}">
+                    {{ ui.icon("credit-card", 14) }}
+                  </span>
+                  <span class="atlas-font font-black leading-tight text-[#1A1020]">{{ e.name or "Unknown card" }}</span>
+                </div>
+              </td>
+              <td class="px-3 py-3 font-mono text-xs text-zinc-500">{{ e.card_number }}</td>
+              <td class="px-3 py-3">
+                {% if e.direction == 'check_in' %}
+                  {{ ui.badge("Check-in", "ok") }}
+                {% elif e.direction == 'check_out' %}
+                  {{ ui.badge("Check-out", "info") }}
+                {% else %}
+                  <span class="text-zinc-300">—</span>
+                {% endif %}
+              </td>
+              <td class="px-3 py-3 text-zinc-500">{{ e.source }}</td>
+              <td class="px-3 py-3 font-mono text-xs text-zinc-500" title="{{ e.occurred_at }}">{{ e.occurred_at | timeago }}</td>
+              <td class="px-3 py-3">
+                {% if e.status == 'sent' %}
+                  {{ ui.badge("Sent", "ok") }}
+                {% elif e.status == 'failed' %}
+                  {{ ui.badge("Retry " ~ e.attempts, "warn") }}
+                {% else %}
+                  {{ ui.badge("Queued", "neutral") }}
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="body-font py-10 text-center text-sm text-zinc-400">No taps recorded yet.</p>
+      {% endif %}
+    </section>
+  </section>
+
+  </div>
+
+  {# ── recent device jobs — a right rail, opposite the left nav, styled like a
+       browser network panel: newest job on top, colored status bar per row ── #}
+  <aside class="w-full shrink-0 xl:sticky xl:top-6 xl:w-80">
+    <div class="mb-3 flex items-baseline justify-between gap-3">
+      <div>
+        <h2 class="atlas-font text-[15px] font-black tracking-tight text-[#1A1020]">Device jobs</h2>
+        <p class="body-font mt-0.5 text-xs text-zinc-500">Commands sent to the terminal.</p>
+      </div>
+    </div>
+    <section class="overflow-hidden rounded-2xl border border-zinc-200/70 bg-white">
+      {% if recent_commands %}
+      <ul class="max-h-140 divide-y divide-zinc-100 overflow-y-auto">
+        {% for c in recent_commands %}
+        {% set bar = "bg-emerald-400" if c.status == 'done' else ("bg-rose-400" if c.status == 'error' else ("bg-sky-400" if c.status == 'running' else "bg-zinc-200")) %}
+        <li class="relative py-2.5 pl-4 pr-3 hover:bg-zinc-50/70">
+          <span class="absolute inset-y-0 left-0 w-0.75 {{ bar }} {{ 'animate-pulse' if c.status == 'running' }}"></span>
+          <div class="flex items-center justify-between gap-2">
+            <a class="body-font truncate font-mono text-[11px] font-semibold text-[#427AB5] hover:underline" href="/commands/{{ c.id }}">
+              #{{ c.id }} · {{ c.kind.replace('_', ' ') }}
+            </a>
+            <span class="body-font shrink-0 font-mono text-[10px] text-zinc-400" title="{{ c.created_at }}">{{ c.created_at | timeago }}</span>
+          </div>
+          <div class="mt-1 flex items-center justify-between gap-2">
+            <p class="body-font truncate text-xs text-zinc-400">{{ c.progress or c.result or "—" }}</p>
+            <span class="shrink-0">
+              {% if c.status == 'done' %}
+                {{ ui.badge("Done", "ok") }}
+              {% elif c.status == 'error' %}
+                {{ ui.badge("Error", "bad") }}
+              {% elif c.status == 'running' %}
+                {{ ui.badge("Running", "info", pulse=True) }}
+              {% else %}
+                {{ ui.badge("Queued", "neutral") }}
+              {% endif %}
+            </span>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="body-font py-10 text-center text-sm text-zinc-400">No device jobs yet.</p>
+      {% endif %}
+    </section>
+  </aside>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% import "_ui.html" as ui %}
+{% block title %}{% endblock %}
+{% block topbar_title %}Edit device user{% endblock %}
+{% block body %}
+<div class="space-y-5">
+  {{ ui.section_head("Edit device user", "Rewrites this exact device slot (uid " ~ (user.uid if user else "") ~ ") — renaming or changing its card number can't create a duplicate row.") }}
+
+  <section class="overflow-hidden rounded-2xl border border-zinc-200/70 bg-white">
+    <div class="flex items-center gap-3 border-b border-zinc-100 px-4 py-4 sm:px-5">
+      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EEF4FB] text-[#427AB5]">
+        {{ ui.icon("user", 16) }}
+      </span>
+      <div>
+        <h2 class="atlas-font text-[15px] font-black tracking-tight text-[#1A1020]">uid {{ user.uid if user else "" }}</h2>
+        <p class="body-font mt-0.5 text-xs text-zinc-500">Changes write straight to the terminal.</p>
+      </div>
+    </div>
+
+    <div class="p-4 sm:p-5">
+      {% if error %}
+      <p class="body-font mb-4 rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-sm text-rose-700">{{ error }}</p>
+      {% endif %}
+      {% if user %}
+      <form method="post" action="/device-users/{{ user.uid }}/edit" class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label for="card_number" class="body-font mb-1.5 block text-xs font-medium text-zinc-500">Card number</label>
+          <input id="card_number" name="card_number" type="text" inputmode="numeric" required
+                 value="{{ user.card_number }}"
+                 class="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 body-font text-sm text-[#1A1020] outline-none transition-all focus:border-[#427AB5] focus:bg-white focus:ring-2 focus:ring-[#427AB5]/10">
+        </div>
+        <div>
+          <label for="label" class="body-font mb-1.5 block text-xs font-medium text-zinc-500">Label / name</label>
+          <input id="label" name="label" type="text" maxlength="24"
+                 value="{{ user.name }}"
+                 class="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 body-font text-sm text-[#1A1020] outline-none transition-all focus:border-[#427AB5] focus:bg-white focus:ring-2 focus:ring-[#427AB5]/10">
+        </div>
+        <div class="flex items-center justify-between gap-3 pt-1 sm:col-span-2">
+          <a href="/device-users" class="body-font text-xs font-semibold text-zinc-500 hover:text-[#427AB5]">Cancel</a>
+          <button type="submit"
+                  class="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-[#427AB5] px-4 py-2.5 body-font text-xs font-semibold text-white transition-colors hover:bg-[#3A6DA0]">
+            {{ ui.icon("check", 14) }} Save changes
+          </button>
+        </div>
+      </form>
+      {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}

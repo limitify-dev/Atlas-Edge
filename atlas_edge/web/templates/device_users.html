@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% import "_ui.html" as ui %}
+{% block title %}{% endblock %}
+{% block topbar_title %}Device users{% endblock %}
+{% block body %}
+<div data-autorefresh data-interval="3000" class="space-y-5">
+  {{ ui.section_head("Device users", "Everyone currently enrolled on the F18 — read straight from the terminal's own user table, not from Atlas.") }}
+
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <div class="flex items-center gap-5">
+      <div>
+        <p class="body-font mb-0.5 text-xs text-zinc-400">Total enrolled</p>
+        <p class="atlas-font text-3xl font-black tracking-tight text-[#1A1020]">{{ total_all }}</p>
+      </div>
+      <div class="h-10 w-px bg-zinc-200"></div>
+      <p class="body-font text-xs text-zinc-400">
+        {% if fetched_at %}last fetched <span title="{{ fetched_at }}">{{ fetched_at | timeago }}</span>
+        {% else %}not fetched yet — click Refresh{% endif %}
+      </p>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="/enroll"
+         class="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3 py-2 body-font text-xs font-semibold text-zinc-600 hover:bg-zinc-50">
+        {{ ui.icon("credit-card", 13) }} Enrol a card
+      </a>
+      <form method="post" action="/device-users/refresh">
+        <button type="submit" {{ 'disabled' if fetching else '' }}
+                class="inline-flex items-center gap-1.5 rounded-xl {{ 'border border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50' if fetching else 'bg-[#427AB5] text-white hover:bg-[#3A6DA0]' }} px-3 py-2 body-font text-xs font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60">
+          {{ ui.icon("refresh-cw", 13) }} {{ 'Fetching…' if fetching else 'Refresh from device' }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  {% if total_all %}
+  <section class="rounded-2xl border border-zinc-200/70 bg-white p-4 sm:p-5">
+    <div class="mb-5 flex flex-wrap items-center justify-between gap-2">
+      <h3 class="atlas-font text-md font-black tracking-tight text-[#1A1020]">Device directory</h3>
+      <div class="flex items-center gap-3">
+        <p class="body-font text-xs text-zinc-400">
+          {% if total_matched == 0 %}no matches{% else %}{{ range_start }}–{{ range_end }} of {{ total_matched }} shown{% endif %}
+        </p>
+        <form method="post" action="/device-users/delete-all"
+              onsubmit="return confirm('Delete ALL {{ total_all }} user(s) from the F18? This removes every card enrolled on the device, not just this page. This cannot be undone.');">
+          <button type="submit"
+                  class="body-font text-xs font-semibold text-rose-500 hover:text-rose-700 hover:underline">
+            Delete all
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <form class="mb-5 flex gap-2" method="get" action="/device-users">
+      <input type="text" name="q" value="{{ q }}" placeholder="Search by name or card number…" autofocus
+             class="w-full flex-1 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 body-font text-sm text-[#1A1020] outline-none transition-all placeholder:text-zinc-400 focus:border-[#427AB5] focus:bg-white">
+      <button type="submit"
+              class="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3 py-2 body-font text-xs font-semibold text-zinc-600 hover:bg-zinc-50">
+        {{ ui.icon("search", 13) }} Search
+      </button>
+      {% if q %}
+      <a href="/device-users"
+         class="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3 py-2 body-font text-xs font-semibold text-zinc-600 hover:bg-zinc-50">Clear</a>
+      {% endif %}
+    </form>
+
+    {% if users %}
+    <form id="delete-users-form" method="post" action="/device-users/delete"
+          onsubmit="return confirm('Delete ' + document.querySelectorAll('#delete-users-form input[name=uid]:checked').length + ' user(s) from the F18? This cannot be undone.');">
+      <div id="selection-toolbar" hidden
+           class="mb-3 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-zinc-100 bg-zinc-50/60 px-3 py-2">
+        <p class="body-font text-xs text-zinc-500"><span id="selection-count">0 selected</span></p>
+        <div class="flex items-center gap-2">
+          <button type="button" id="clear-selection-btn"
+                  class="rounded-lg border border-zinc-200 bg-white px-3 py-1.5 body-font text-xs font-semibold text-zinc-500 hover:bg-zinc-50">
+            Clear
+          </button>
+          <a id="edit-selected-link" href="#" hidden
+             class="inline-flex items-center gap-1.5 rounded-lg bg-[#1A1020] px-3 py-1.5 body-font text-xs font-semibold text-white hover:opacity-80">
+            {{ ui.icon("pencil", 12) }} Edit
+          </a>
+          <button type="submit" id="delete-selected-btn"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-rose-200 bg-white px-3 py-1.5 body-font text-xs font-semibold text-rose-600 hover:bg-rose-50">
+            {{ ui.icon("trash-2", 12) }} Delete
+          </button>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full body-font text-sm" style="min-width:540px">
+          <thead>
+            <tr class="text-left text-zinc-400">
+              <th class="w-8 px-3 py-2 font-medium">
+                <input type="checkbox" id="select-all-users" aria-label="Select all"
+                       class="h-4 w-4 accent-[#427AB5]">
+              </th>
+              <th class="px-3 py-2 font-medium">Name</th>
+              <th class="px-3 py-2 font-medium">Card number</th>
+              <th class="px-3 py-2 font-medium">UID</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for u in users %}
+            <tr class="border-t border-zinc-100 text-[#1A1020] transition-colors hover:bg-zinc-50">
+              <td class="px-3 py-3">
+                <input type="checkbox" name="uid" value="{{ u.uid }}" aria-label="Select {{ u.name or u.card_number }}"
+                       class="user-row-checkbox h-4 w-4 accent-[#427AB5]">
+              </td>
+              <td class="px-3 py-3">
+                <div class="flex items-center gap-3">
+                  <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EEF4FB] text-[#427AB5]">
+                    {{ ui.icon("user", 14) }}
+                  </span>
+                  <span class="atlas-font font-black leading-tight text-[#1A1020]">{{ u.name or "—" }}</span>
+                </div>
+              </td>
+              <td class="px-3 py-3 font-mono text-xs text-zinc-500">{{ u.card_number }}</td>
+              <td class="px-3 py-3 font-mono text-xs text-zinc-400">{{ u.uid }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </form>
+    <script>
+      (function () {
+        var boxes = Array.prototype.slice.call(document.querySelectorAll(".user-row-checkbox"));
+        var selectAll = document.getElementById("select-all-users");
+        var toolbar = document.getElementById("selection-toolbar");
+        var countEl = document.getElementById("selection-count");
+        var editLink = document.getElementById("edit-selected-link");
+        var clearBtn = document.getElementById("clear-selection-btn");
+
+        function refresh() {
+          var checked = boxes.filter(function (b) { return b.checked; });
+          var n = checked.length;
+          if (toolbar) toolbar.hidden = n === 0;
+          if (countEl) countEl.textContent = n + (n === 1 ? " selected" : " selected");
+          if (editLink) {
+            editLink.hidden = n !== 1;
+            if (n === 1) editLink.href = "/device-users/" + checked[0].value + "/edit";
+          }
+          if (selectAll) {
+            selectAll.checked = n > 0 && n === boxes.length;
+            selectAll.indeterminate = n > 0 && n < boxes.length;
+          }
+          // Auto-refresh replaces this whole region — pause it while rows are
+          // selected so it doesn't wipe out an in-progress edit/delete pick.
+          var root = document.querySelector("[data-autorefresh]");
+          if (root) root.dataset.active = n > 0 ? "0" : "1";
+        }
+
+        boxes.forEach(function (b) { b.addEventListener("change", refresh); });
+        if (selectAll) {
+          selectAll.addEventListener("change", function () {
+            boxes.forEach(function (b) { b.checked = selectAll.checked; });
+            refresh();
+          });
+        }
+        if (clearBtn) {
+          clearBtn.addEventListener("click", function () {
+            boxes.forEach(function (b) { b.checked = false; });
+            refresh();
+          });
+        }
+        refresh();
+      })();
+    </script>
+    {{ ui.pager("/device-users", q, page, total_pages) }}
+    {% endif %}
+  </section>
+  {% elif not fetching %}
+  <p class="body-font text-sm text-zinc-400">Nothing fetched yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

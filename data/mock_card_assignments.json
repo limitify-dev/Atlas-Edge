@@ -1,0 +1,7 @@
+[
+  { "student_id": "stu-001", "name": "Aline Uwase",       "card_number": "1001" },
+  { "student_id": "stu-002", "name": "Bosco Habimana",    "card_number": "1002" },
+  { "student_id": "stu-003", "name": "Chantal Ingabire",  "card_number": "1003" },
+  { "student_id": "stu-004", "name": "David Nshuti",       "card_number": "1004" },
+  { "student_id": "stu-005", "name": "Esther Mukamana",   "card_number": "1005" }
+]

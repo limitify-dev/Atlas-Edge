@@ -1,0 +1,78 @@
+{% import "_ui.html" as ui %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% block head %}{% endblock %}
+  <title>Atlas Edge{% block title %}{% endblock %}</title>
+  <link rel="icon" href="/static/favicon.png">
+  <link rel="stylesheet" href="/static/tailwind.css?v={{ asset_version('tailwind.css') }}">
+</head>
+<body class="body-font antialiased text-[#171717]">
+<div class="flex min-h-screen">
+  {% set p = request.url.path %}
+  <aside class="sticky top-0 flex h-screen w-55 shrink-0 flex-col border-r border-zinc-100 bg-[#F8FAFD]">
+    <div class="flex h-16 shrink-0 items-center gap-2.5 overflow-hidden px-5">
+      <img src="/static/atlas-icon.png" alt="Atlas" class="h-7 w-7 shrink-0">
+      <span class="atlas-brand text-[19px] text-[#1A1020]">Atlas&nbsp;Edge</span>
+    </div>
+
+    <nav class="flex flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      {% set links = [
+        ("/", "radio", "Status", p == "/"),
+        ("/enroll", "credit-card", "Enroll cards", p.startswith("/enroll")),
+        ("/sync", "refresh-cw", "Sync from Atlas", p.startswith("/sync")),
+        ("/device-users", "users", "Device users", p.startswith("/device-users")),
+      ] %}
+      {% for href, ic, label, active in links %}
+      <a href="{{ href }}"
+         class="group flex items-center gap-3 rounded-lg border px-2.5 py-2 transition-all duration-150 {{ 'border-[#427AB5]/20 bg-[#EEF4FB]' if active else 'border-transparent hover:bg-white/70' }}">
+        <span class="inline-flex shrink-0 rounded-md p-1.25 {{ 'bg-[#427AB5] text-white' if active else 'bg-zinc-100 text-zinc-500 group-hover:bg-zinc-200' }}">
+          {{ ui.icon(ic, 13) }}
+        </span>
+        <span class="body-font text-[13px] leading-none {{ 'font-semibold text-[#1A1020]' if active else 'font-medium text-zinc-600' }}">{{ label }}</span>
+      </a>
+      {% endfor %}
+      {% if mock_mode %}
+      <a href="/dev"
+         class="group flex items-center gap-3 rounded-lg border px-2.5 py-2 transition-all duration-150 {{ 'border-[#427AB5]/20 bg-[#EEF4FB]' if p.startswith('/dev') else 'border-transparent hover:bg-white/70' }}">
+        <span class="inline-flex shrink-0 rounded-md p-1.25 {{ 'bg-[#427AB5] text-white' if p.startswith('/dev') else 'bg-zinc-100 text-zinc-500 group-hover:bg-zinc-200' }}">
+          {{ ui.icon("wrench", 13) }}
+        </span>
+        <span class="body-font text-[13px] leading-none {{ 'font-semibold text-[#1A1020]' if p.startswith('/dev') else 'font-medium text-zinc-600' }}">Test tools</span>
+      </a>
+      {% endif %}
+    </nav>
+
+    <div class="shrink-0 space-y-0.5 border-t border-zinc-100 px-3 py-3">
+      <div class="truncate px-2.5 pb-2 body-font text-[11px] text-zinc-400">{{ email }}</div>
+      <form method="post" action="/logout">
+        <button type="submit"
+                class="group flex w-full items-center gap-3 rounded-lg border border-transparent px-2.5 py-2 transition-all duration-150 hover:border-red-200/70 hover:bg-red-50">
+          <span class="inline-flex shrink-0 rounded-md bg-zinc-100 p-1.25 text-zinc-500 group-hover:bg-red-100 group-hover:text-red-500">
+            {{ ui.icon("log-out", 13) }}
+          </span>
+          <span class="body-font text-[13px] font-medium leading-none text-zinc-600 group-hover:text-red-500">Sign out</span>
+        </button>
+      </form>
+    </div>
+  </aside>
+
+  <div class="flex min-w-0 flex-1 flex-col">
+    <header class="flex h-16 shrink-0 items-center gap-4 border-b border-zinc-100 bg-white px-6">
+      <h1 class="atlas-font w-auto shrink-0 text-[17px] font-black tracking-tight text-[#1A1020]">{% block topbar_title %}Atlas Edge{% endblock %}</h1>
+      <span class="flex-1"></span>
+      {{ ui.badge('Mock device' if device_driver == 'mock' else 'F18', 'warn' if device_driver == 'mock' else 'neutral') }}
+      {{ ui.badge('Mock Atlas' if atlas_driver == 'mock' else 'Atlas API', 'warn' if atlas_driver == 'mock' else 'neutral') }}
+    </header>
+    <main class="flex-1 overflow-y-auto p-6 sm:p-7">
+      <div class="mx-auto {% block container_class %}max-w-4xl{% endblock %}">
+        {% block body %}{% endblock %}
+      </div>
+    </main>
+  </div>
+</div>
+<script src="/static/app.js?v={{ asset_version('app.js') }}" defer></script>
+</body>
+</html>

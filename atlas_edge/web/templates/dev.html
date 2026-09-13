@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% import "_ui.html" as ui %}
+{% block title %}{% endblock %}
+{% block topbar_title %}Test tools{% endblock %}
+{% block body %}
+<div class="space-y-5">
+  {{ ui.section_head("Test tools", "Mock mode — no F18, no real Atlas. Simulate a card tap and it flows through the same listener → queue → Atlas pipeline.") }}
+
+  <div class="body-font rounded-xl border border-[#427AB5]/20 bg-[#EEF4FB] px-3.5 py-2.5 text-sm text-[#2F628F]">
+    There is no hardware. The "device" is an in-memory table and "Atlas" records
+    pushed events locally. Run <code class="rounded bg-white/60 px-1.5 py-0.5 font-mono text-xs">python -m atlas_edge.listener</code> in
+    another terminal for taps to be processed.
+  </div>
+
+  <section class="max-w-md rounded-2xl border border-zinc-200/70 bg-white p-4 sm:p-5">
+    <h2 class="atlas-font mb-4 text-[15px] font-black tracking-tight text-[#1A1020]">Simulate a tap</h2>
+    <form method="post" action="/dev/tap" class="space-y-4">
+      <div>
+        <label for="card_number" class="body-font block text-xs font-medium text-zinc-500 mb-1.5">Card number</label>
+        <input id="card_number" name="card_number" type="text" inputmode="numeric"
+               placeholder="1001" required autofocus
+               class="w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 body-font text-sm text-[#1A1020] outline-none focus:border-[#427AB5] focus:ring-2 focus:ring-[#427AB5]/10">
+      </div>
+      <div>
+        <button type="submit"
+                class="inline-flex items-center gap-1.5 rounded-xl bg-[#427AB5] px-3.5 py-2.5 body-font text-xs font-semibold text-white hover:bg-[#3A6DA0]">
+          {{ ui.icon("radio", 14) }} Tap
+        </button>
+      </div>
+    </form>
+    <p class="body-font mt-4 text-xs text-zinc-400">
+      Tip: run <a class="font-semibold text-[#427AB5] hover:underline" href="/sync">Sync from Atlas</a> first so cards
+      <code class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono">1001</code>–<code class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono">1005</code>
+      are enrolled and the tap comes through with a name.
+    </p>
+  </section>
+
+  <div data-autorefresh data-interval="4000" class="space-y-5">
+    <section class="rounded-2xl border border-zinc-200/70 bg-white p-4 sm:p-5">
+      <h2 class="atlas-font mb-4 text-[15px] font-black tracking-tight text-[#1A1020]">Mock device users ({{ device_users | length }})</h2>
+      {% if device_users %}
+      <div class="overflow-x-auto">
+        <table class="w-full body-font text-sm">
+          <thead>
+            <tr class="border-b border-zinc-200 text-left text-zinc-400">
+              <th class="px-3 py-2 font-medium">uid</th>
+              <th class="px-3 py-2 font-medium">user_id (card)</th>
+              <th class="px-3 py-2 font-medium">name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for u in device_users %}
+            <tr class="border-b border-zinc-100 text-[#1A1020] hover:bg-zinc-50/70">
+              <td class="px-3 py-2.5 font-mono text-xs">{{ u.uid }}</td>
+              <td class="px-3 py-2.5 font-mono text-xs">{{ u.user_id }}</td>
+              <td class="px-3 py-2.5">{{ u.name }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}<p class="body-font text-sm text-zinc-400">Nothing enrolled yet — run a sync.</p>{% endif %}
+    </section>
+
+    <section class="rounded-2xl border border-zinc-200/70 bg-white p-4 sm:p-5">
+      <h2 class="atlas-font mb-4 text-[15px] font-black tracking-tight text-[#1A1020]">Events the mock Atlas received ({{ atlas_events | length }} shown)</h2>
+      {% if atlas_events %}
+      <div class="overflow-x-auto">
+        <table class="w-full body-font text-sm">
+          <thead>
+            <tr class="border-b border-zinc-200 text-left text-zinc-400">
+              <th class="px-3 py-2 font-medium">#</th>
+              <th class="px-3 py-2 font-medium">payload</th>
+              <th class="px-3 py-2 font-medium">received</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for e in atlas_events %}
+            <tr class="border-b border-zinc-100 text-[#1A1020] hover:bg-zinc-50/70">
+              <td class="px-3 py-2.5 font-mono text-xs">{{ e.id }}</td>
+              <td class="px-3 py-2.5 font-mono text-xs">{{ e.payload }}</td>
+              <td class="px-3 py-2.5 font-mono text-xs text-zinc-500">{{ e.received_at }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}<p class="body-font text-sm text-zinc-400">No events pushed yet.</p>{% endif %}
+    </section>
+  </div>
+</div>
+{% endblock %}
