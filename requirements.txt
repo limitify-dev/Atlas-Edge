@@ -1,10 +1,21 @@
 # Runtime dependencies for the Pi. Install with:  pip install -r requirements.txt
-pyzk>=0.9
-httpx>=0.27
-fastapi>=0.110
-uvicorn[standard]>=0.29
-jinja2>=3.1
-python-multipart>=0.0.9
-itsdangerous>=2.1
-pydantic>=2.6
-pydantic-settings>=2.2
+#
+# Pinned to exact versions verified working together (this combo is what's
+# been tested against all season) — the previous open-ended `>=` pins let a
+# fresh `pip install` on a different machine/date resolve newer, untested
+# releases. That's exactly what broke the Pi: a newer Jinja2/Starlette pull
+# hit `TypeError: unhashable type: 'dict'` inside Jinja's own template cache
+# on every single page render (crashes before any of this app's template
+# code even runs) — a real incompatibility in that newer combo, not a bug
+# here. Re-run `pip install -r requirements.txt` in the existing venv to
+# pull these exact versions; that's the fix.
+pyzk==0.9
+httpx==0.28.1
+fastapi==0.128.8
+starlette==0.49.3
+uvicorn[standard]==0.39.0
+jinja2==3.1.6
+python-multipart==0.0.20
+itsdangerous==2.2.0
+pydantic==2.13.5
+pydantic-settings==2.11.0
