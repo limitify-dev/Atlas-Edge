@@ -64,6 +64,16 @@ class Settings(BaseSettings):
     # scripts already read straight from .env for the same interface — kept
     # in sync deliberately, one name for one physical adapter.
     wifi_iface: str = "wlan0"
+    # This radio can't reliably scan for a new network while ap0 is
+    # actively beaconing (confirmed live — wlan0 scanning silently fails to
+    # find an in-range AP whenever ap0 is up). wifi.connect() briefly stops
+    # these units for the duration of a connect attempt, then re-runs
+    # ap0_setup.sh to bring ap0 back (which also realigns its channel to
+    # wherever wlan0 ends up). Needs a matching sudoers NOPASSWD grant for
+    # this unprivileged process — see systemd/ap0-wifi-sudoers.
+    hotspot_hostapd_unit: str = "atlas-ap0-hostapd.service"
+    hotspot_dnsmasq_unit: str = "atlas-ap0-dnsmasq.service"
+    hotspot_watchdog_timer: str = "atlas-ap0-watchdog.timer"
 
     # ── Local state ────────────────────────────────────────────────────────
     db_path: Path = Path("./data/atlas_edge.sqlite3")

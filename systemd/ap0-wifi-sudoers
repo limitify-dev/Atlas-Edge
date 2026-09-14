@@ -1,0 +1,20 @@
+# Lets the unprivileged atlas-edge-web process (runs as "limitify", not
+# root) briefly pause and resume the ap0 admin hotspot around a wlan0
+# reconnect attempt from /wifi-setup — this radio can't reliably scan for a
+# new network while ap0 is actively beaconing (confirmed live). See
+# atlas_edge/wifi.py's _pause_hotspot()/_resume_hotspot().
+#
+# Scoped to exactly these five commands, nothing broader — no general sudo
+# access, no wildcards.
+#
+# Install (never edit /etc/sudoers directly, and always validate before it
+# takes effect — a malformed sudoers file can break sudo entirely):
+#   sudo visudo -c -f systemd/ap0-wifi-sudoers
+#   sudo install -m 0440 -o root -g root systemd/ap0-wifi-sudoers /etc/sudoers.d/atlas-edge-wifi
+#   sudo visudo -c
+
+limitify ALL=(root) NOPASSWD: /usr/bin/systemctl stop atlas-ap0-watchdog.timer
+limitify ALL=(root) NOPASSWD: /usr/bin/systemctl start atlas-ap0-watchdog.timer
+limitify ALL=(root) NOPASSWD: /usr/bin/systemctl stop atlas-ap0-hostapd.service
+limitify ALL=(root) NOPASSWD: /usr/bin/systemctl stop atlas-ap0-dnsmasq.service
+limitify ALL=(root) NOPASSWD: /home/limitify/Developer/Atlas-Edge/atlas_edge/scripts/ap0_setup.sh

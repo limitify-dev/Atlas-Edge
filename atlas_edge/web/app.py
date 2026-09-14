@@ -470,7 +470,14 @@ def device_user_edit_submit(
 # isn't just a nicety, it's what keeps a request arriving over wlan0 from
 # being cut off by the very reconnect it triggered. ────────────────────────
 def _run_wifi_connect(iface: str, ssid: str, password: str) -> None:
-    ok, message = wifi.connect(iface, ssid, password)
+    ok, message = wifi.connect(
+        iface,
+        ssid,
+        password,
+        hotspot_hostapd_unit=settings.hotspot_hostapd_unit,
+        hotspot_dnsmasq_unit=settings.hotspot_dnsmasq_unit,
+        hotspot_watchdog_timer=settings.hotspot_watchdog_timer,
+    )
     log.info("wifi connect to %r on %s: %s", ssid, iface, "ok" if ok else "failed")
     storage.set_wifi_connect_state(
         {
