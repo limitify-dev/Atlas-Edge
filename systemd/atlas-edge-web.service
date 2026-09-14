@@ -19,9 +19,25 @@ RestartSec=5
 # Light hardening only — ProtectHome is deliberately NOT set: the whole
 # deployment (code, venv, .env, data/) lives under /home/limitify, which
 # that directive would make inaccessible to the service entirely.
-NoNewPrivileges=true
+#
+# NoNewPrivileges is deliberately NOT set (unlike atlas-edge-listener):
+# /wifi-setup's connect flow needs this process to invoke sudo (see
+# atlas_edge/wifi.py, systemd/ap0-wifi-sudoers) to pause/resume ap0 and
+# manage wlan0's NetworkManager connection — both require root, and
+# NoNewPrivileges categorically blocks any setuid escalation (sudo
+# included), regardless of how the sudoers file is scoped. The actual
+# privilege boundary is the sudoers grant itself: narrowly scoped to
+# specific systemctl/nmcli commands on wlan0 and specific ap0 units,
+# nothing broader.
 ProtectSystem=strict
-ReadWritePaths=/home/limitify/Developer/Atlas-Edge/data
+# ProtectSystem=strict's read-only mount namespace applies to the whole
+# process tree this unit starts — including a sudo-elevated child, since
+# gaining root credentials via setuid doesn't escape a mount namespace the
+# way it bypasses file-permission checks. These are exactly (and only) the
+# paths a sudo'd nmcli/ap0_setup.sh call needs to write under /etc:
+# NetworkManager's own connection-profile store, and the two hotspot
+# config files ap0_setup.sh generates.
+ReadWritePaths=/home/limitify/Developer/Atlas-Edge/data /etc/NetworkManager/system-connections /etc/hostapd /etc/dnsmasq-atlas-ap0.conf
 PrivateTmp=true
 
 [Install]
