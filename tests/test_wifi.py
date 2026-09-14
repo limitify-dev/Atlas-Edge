@@ -139,3 +139,31 @@ def test_connect_timeout_is_reported_as_failure_not_raised(monkeypatch):
     ok, message = wifi.connect("wlan0", "OutOfRange", "somepass")
     assert ok is False
     assert "somepass" not in message
+
+
+def test_connect_deletes_stale_profile_before_connecting(monkeypatch):
+    calls = []
+
+    def fake_run(cmd, **kwargs):
+        calls.append(cmd)
+        if cmd[:3] == ["nmcli", "connection", "delete"]:
+            return FakeCompleted(0, "", "")
+        return FakeCompleted(0, "Device 'wlan0' successfully activated.", "")
+
+    monkeypatch.setattr(wifi.subprocess, "run", fake_run)
+    ok, _ = wifi.connect("wlan0", "MySchool", "hunter22")
+    assert ok is True
+    assert calls[0] == ["nmcli", "connection", "delete", "MySchool"]
+    assert calls[1][:4] == ["nmcli", "device", "wifi", "connect"]
+
+
+def test_connect_delete_failure_does_not_block_the_real_connect_attempt(monkeypatch):
+    def fake_run(cmd, **kwargs):
+        if cmd[:3] == ["nmcli", "connection", "delete"]:
+            raise OSError("nmcli not found")
+        return FakeCompleted(0, "Device 'wlan0' successfully activated.", "")
+
+    monkeypatch.setattr(wifi.subprocess, "run", fake_run)
+    ok, message = wifi.connect("wlan0", "MySchool", "hunter22")
+    assert ok is True
+    assert "successfully activated" in message

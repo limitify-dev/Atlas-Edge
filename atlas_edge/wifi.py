@@ -144,6 +144,22 @@ def connect(iface: str, ssid: str, password: str) -> tuple[bool, str]:
     handler. Returns ``(ok, message)``; ``message`` is nmcli's own
     stdout/stderr and never contains ``password`` (nmcli doesn't echo
     submitted secrets back), so it's always safe to surface or log."""
+    # nmcli names an auto-created wifi profile after the SSID by default,
+    # and reuses an existing profile of that name rather than building a
+    # fresh one. A stale/incomplete profile (e.g. one NM created just from
+    # having "seen" this network before, never actually connected to with
+    # credentials) can be missing 802-11-wireless-security.key-mgmt
+    # entirely, which surfaces as a cryptic activation failure even with a
+    # correct password. Best-effort delete first so nmcli always starts
+    # clean — fine if there's nothing to delete, and fine if this itself
+    # fails/times out (never let a cleanup step block the real attempt).
+    try:
+        subprocess.run(
+            ["nmcli", "connection", "delete", ssid], capture_output=True, timeout=10, check=False
+        )
+    except (OSError, subprocess.SubprocessError) as exc:
+        log.warning("pre-connect delete of stale profile %r failed: %s", ssid, exc)
+
     cmd = ["nmcli", "device", "wifi", "connect", ssid, "ifname", iface]
     if password:
         cmd += ["password", password]
