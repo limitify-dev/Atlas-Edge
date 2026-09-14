@@ -4,6 +4,6 @@ After=atlas-ap0-setup.service
 
 [Service]
 Type=oneshot
-EnvironmentFile=/opt/atlas-edge/.env
-ExecStart=/opt/atlas-edge/atlas_edge/scripts/ap0_watchdog.sh
+EnvironmentFile=/home/limitify/Developer/Atlas-Edge/.env
+ExecStart=/home/limitify/Developer/Atlas-Edge/atlas_edge/scripts/ap0_watchdog.sh
 # Same reasoning as atlas-ap0-setup.service — needs root for iw/ip/nmcli.

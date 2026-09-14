@@ -5,7 +5,7 @@
 # interfaces) or the hotspot connection dropping, without needing a reboot.
 set -uo pipefail   # not -e: this script's whole job is to react to failures
 
-ENV_FILE="${ATLAS_EDGE_ENV_FILE:-/opt/atlas-edge/.env}"
+ENV_FILE="${ATLAS_EDGE_ENV_FILE:-/home/limitify/Developer/Atlas-Edge/.env}"
 if [ -f "$ENV_FILE" ]; then
   set -a
   # shellcheck disable=SC1090
@@ -15,7 +15,7 @@ fi
 
 HOTSPOT_IFACE="${ATLAS_EDGE_HOTSPOT_IFACE:-ap0}"
 HOTSPOT_CONN="${ATLAS_EDGE_HOTSPOT_CONN_NAME:-Atlas-Edge-Admin}"
-SETUP_SCRIPT="${ATLAS_EDGE_AP0_SETUP_SCRIPT:-/opt/atlas-edge/atlas_edge/scripts/ap0_setup.sh}"
+SETUP_SCRIPT="${ATLAS_EDGE_AP0_SETUP_SCRIPT:-/home/limitify/Developer/Atlas-Edge/atlas_edge/scripts/ap0_setup.sh}"
 
 log() {
   logger -t atlas-ap0-watchdog -- "$1"

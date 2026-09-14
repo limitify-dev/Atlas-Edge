@@ -15,7 +15,7 @@ set -euo pipefail
 # Load ATLAS_EDGE_* overrides the same way the rest of this project does.
 # systemd's EnvironmentFile= already injects these for the unit; source
 # directly too so the script also works run by hand.
-ENV_FILE="${ATLAS_EDGE_ENV_FILE:-/opt/atlas-edge/.env}"
+ENV_FILE="${ATLAS_EDGE_ENV_FILE:-/home/limitify/Developer/Atlas-Edge/.env}"
 if [ -f "$ENV_FILE" ]; then
   set -a
   # shellcheck disable=SC1090

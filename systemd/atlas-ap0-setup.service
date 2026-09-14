@@ -12,8 +12,8 @@ StartLimitBurst=5
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-EnvironmentFile=/opt/atlas-edge/.env
-ExecStart=/opt/atlas-edge/atlas_edge/scripts/ap0_setup.sh
+EnvironmentFile=/home/limitify/Developer/Atlas-Edge/.env
+ExecStart=/home/limitify/Developer/Atlas-Edge/atlas_edge/scripts/ap0_setup.sh
 # wlan0 association can be slow/flaky right after boot — retry a few times
 # rather than giving up after one failed attempt.
 Restart=on-failure
