@@ -8,18 +8,20 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=atlas-edge
-Group=atlas-edge
-WorkingDirectory=/opt/atlas-edge
-EnvironmentFile=/opt/atlas-edge/.env
-ExecStart=/opt/atlas-edge/.venv/bin/python -m atlas_edge.web
+User=limitify
+Group=limitify
+WorkingDirectory=/home/limitify/Developer/Atlas-Edge
+EnvironmentFile=/home/limitify/Developer/Atlas-Edge/.env
+ExecStart=/home/limitify/Developer/Atlas-Edge/venv/bin/python -m atlas_edge.web
 Restart=always
 RestartSec=5
 
+# Light hardening only — ProtectHome is deliberately NOT set: the whole
+# deployment (code, venv, .env, data/) lives under /home/limitify, which
+# that directive would make inaccessible to the service entirely.
 NoNewPrivileges=true
 ProtectSystem=strict
-ReadWritePaths=/opt/atlas-edge/data
-ProtectHome=true
+ReadWritePaths=/home/limitify/Developer/Atlas-Edge/data
 PrivateTmp=true
 
 [Install]
