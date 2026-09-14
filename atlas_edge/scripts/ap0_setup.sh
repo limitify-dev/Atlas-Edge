@@ -61,11 +61,13 @@ else
     || fail "Failed to create ${HOTSPOT_IFACE} on ${WIFI_IFACE} — does this radio support concurrent AP+station mode? (check: iw list)"
 fi
 
-# ── 3. Bring it up at the link layer ────────────────────────────────────
-ip link set "$HOTSPOT_IFACE" up || fail "Failed to bring ${HOTSPOT_IFACE} up (ip link set)."
-log "${HOTSPOT_IFACE} is up."
-
-# ── 4. Make sure NetworkManager is managing it ──────────────────────────
+# ── 3. Make sure NetworkManager is managing it ──────────────────────────
+# Deliberately no manual `ip link set up` here: NetworkManager auto-manages
+# newly-created wifi netdevs the moment they appear (regardless of the
+# `managed yes` call below), and will reset a bare __ap interface back to
+# `managed` type before we ever reach it. Racing NM with a manual link-up
+# just fails every time. `nmcli connection up` in step 5 brings the
+# interface up itself as part of activating the AP profile.
 nmcli device set "$HOTSPOT_IFACE" managed yes \
   || fail "Failed to tell NetworkManager to manage ${HOTSPOT_IFACE}."
 
@@ -81,7 +83,7 @@ until nmcli -t -f DEVICE device status 2>/dev/null | grep -qx "$HOTSPOT_IFACE"; 
 done
 log "NetworkManager is managing ${HOTSPOT_IFACE}."
 
-# ── 5. Bind the admin hotspot profile to ap0 and bring it up ───────────
+# ── 4. Bind the admin hotspot profile to ap0 and bring it up ───────────
 # The profile may have been created against a different/nonexistent
 # interface name — always (re)bind it to the real one before activating,
 # so this is also correct on a freshly re-imaged Pi.
