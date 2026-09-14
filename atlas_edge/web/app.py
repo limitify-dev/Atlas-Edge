@@ -456,16 +456,17 @@ def device_user_edit_submit(
 
 
 # ── WiFi network setup (which network wlan0 joins — never touches ap0,
-# the separate admin hotspot this page itself is normally reached through).
-# Gated the same as every other page: `_logged_in` only checks a local
-# session cookie + a locally-stored Atlas token (see atlas_client.py's
-# `is_authenticated`), no live call out to Atlas — so it still works from
-# the admin hotspot even while wlan0 itself is down/mid-reconfiguration,
-# which is exactly when this page is needed. Note this app binds 0.0.0.0
-# (see Settings.web_host), so it's technically also reachable over wlan0's
-# own address, not just ap0's — the background-thread connect below isn't
-# just a nicety, it's what keeps a request arriving over wlan0 from being
-# cut off by the very reconnect it triggered. ─────────────────────────────
+# the separate admin hotspot this page is normally reached through). A
+# standalone page (its own HTML shell, not the dashboard chrome) reachable
+# *before* signing in — deliberately NOT gated by `_logged_in`. Knowing the
+# admin hotspot's own SSID/password is the trust boundary here, the same
+# model a consumer router's own setup page uses; requiring an Atlas login
+# first would defeat the point of a page whose job is to get network
+# connectivity working before anything else can happen. Note this app binds
+# 0.0.0.0 (see Settings.web_host), so it's technically also reachable over
+# wlan0's own address, not just ap0's — the background-thread connect below
+# isn't just a nicety, it's what keeps a request arriving over wlan0 from
+# being cut off by the very reconnect it triggered. ────────────────────────
 def _run_wifi_connect(iface: str, ssid: str, password: str) -> None:
     ok, message = wifi.connect(iface, ssid, password)
     log.info("wifi connect to %r on %s: %s", ssid, iface, "ok" if ok else "failed")
@@ -481,8 +482,6 @@ def _run_wifi_connect(iface: str, ssid: str, password: str) -> None:
 
 @app.get("/wifi-setup", response_class=HTMLResponse)
 def wifi_setup_page(request: Request):
-    if not _logged_in(request):
-        return _redirect("/login")
     try:
         networks = wifi.scan_networks(settings.wifi_iface)
         scan_error = None
@@ -506,8 +505,6 @@ def wifi_setup_page(request: Request):
 
 @app.post("/wifi-setup")
 def wifi_setup_connect(request: Request, ssid: str = Form(...), password: str = Form("")):
-    if not _logged_in(request):
-        return JSONResponse({"error": "unauthenticated"}, status_code=401)
     ssid = ssid.strip()
     if not ssid:
         return JSONResponse({"error": "Choose a network first."}, status_code=400)
@@ -525,8 +522,6 @@ def wifi_setup_connect(request: Request, ssid: str = Form(...), password: str = 
 
 @app.get("/wifi-setup/status")
 def wifi_setup_status(request: Request):
-    if not _logged_in(request):
-        return JSONResponse({"error": "unauthenticated"}, status_code=401)
     return JSONResponse(storage.get_wifi_connect_state())
 
 

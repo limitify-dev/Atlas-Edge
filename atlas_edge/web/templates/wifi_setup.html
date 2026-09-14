@@ -1,104 +1,128 @@
-{% extends "base.html" %}
 {% import "_ui.html" as ui %}
-{% block title %}{% endblock %}
-{% block topbar_title %}WiFi network{% endblock %}
-{% block body %}
-<div class="space-y-5">
-  {{ ui.section_head("WiFi network", "Choose which network " ~ wifi_iface ~ " should join. The admin hotspot you're connected to right now is a separate connection on its own interface — changing this never drops it.") }}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atlas Edge — WiFi setup</title>
+  <link rel="icon" href="/static/favicon.png">
+  <link rel="stylesheet" href="/static/tailwind.css?v={{ asset_version('tailwind.css') }}">
+</head>
+<body class="body-font antialiased">
+<div class="flex min-h-dvh flex-col bg-[#100C08] lg:grid lg:h-screen lg:grid-cols-2 lg:overflow-hidden">
 
-  {% if scan_error %}
-  <p class="body-font rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-sm text-rose-700">Couldn't scan for networks: {{ scan_error }}</p>
-  {% endif %}
-
-  {% if connected %}
-  <section class="overflow-hidden rounded-2xl border border-emerald-200/60 bg-emerald-50/40">
-    <div class="flex items-center justify-between gap-3 px-4 py-4 sm:px-5">
-      <div class="flex items-center gap-3">
-        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
-          {{ ui.icon("wifi", 16) }}
-        </span>
-        <div>
-          <h2 class="atlas-font text-[15px] font-black tracking-tight text-[#1A1020]">{{ connected.ssid }}</h2>
-          <p class="body-font mt-0.5 text-xs text-zinc-500">Currently connected on {{ wifi_iface }}</p>
-        </div>
-      </div>
-      {{ ui.badge("Connected", "ok") }}
-    </div>
-  </section>
-  {% endif %}
-
-  <section class="overflow-hidden rounded-2xl border border-zinc-200/70 bg-white">
-    <div class="flex items-center gap-3 border-b border-zinc-100 px-4 py-4 sm:px-5">
-      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EEF4FB] text-[#427AB5]">
-        {{ ui.icon("wifi", 16) }}
-      </span>
-      <div>
-        <h2 class="atlas-font text-[15px] font-black tracking-tight text-[#1A1020]">Available networks</h2>
-        <p class="body-font mt-0.5 text-xs text-zinc-500">Tap a network to connect.</p>
-      </div>
+  {# ── Left panel: brand wash + copy, matches login.html's aside ── #}
+  <aside class="relative hidden flex-col justify-between overflow-hidden bg-no-repeat p-12 lg:flex xl:p-16"
+         style="background-image: radial-gradient(130% 120% at 0% 0%, rgba(66,122,181,.30), transparent 52%),
+                                   linear-gradient(160deg, rgba(18,16,12,.55) 0%, rgba(13,25,40,.55) 60%, rgba(11,21,36,.6) 100%),
+                                   url('/static/terminal.png');
+                background-size: cover, cover, cover;
+                background-position: 0% 0%, center, 10% 55%;">
+    <div class="relative z-10 flex items-center gap-3" style="font-size: clamp(20px, 5vw, 26px);">
+      <img src="/static/atlas-icon.png" alt="Atlas"
+           class="h-8 w-8 shrink-0 rounded-xl bg-white/90 p-1.5 shadow-[0_6px_20px_rgba(20,34,50,0.18)] ring-1 ring-white/70 sm:h-9 sm:w-9 md:h-10 md:w-10">
+      <span class="atlas-brand text-2xl text-white">Atlas&nbsp;Edge</span>
     </div>
 
-    <div id="network-list" class="divide-y divide-zinc-100">
+    <div class="relative z-10">
+      <h1 class="atlas-font text-white font-semibold leading-[1.08] tracking-[-0.03em]" style="font-size: clamp(32px,3vw,48px);">
+        Get connected,<br>then sign in.
+      </h1>
+      <p class="body-font mt-3 max-w-sm text-[15px] leading-[1.75] text-white/55">
+        This gateway needs a network before it can reach Atlas. Pick one on
+        the right — the admin hotspot you're on right now stays up the
+        whole time, on its own separate connection.
+      </p>
+    </div>
+  </aside>
+
+  {# ── Right panel: network list + connect flow ── #}
+  <article class="flex min-h-dvh flex-col overflow-y-auto bg-[#0C1523] px-6 py-8 sm:px-12 lg:min-h-0 xl:px-16">
+    <div class="mb-8 flex items-center gap-3 lg:hidden">
+      <img src="/static/atlas-icon.png" alt="Atlas" class="h-8 w-8 rounded-xl bg-white/90 p-1.5">
+      <span class="atlas-brand text-2xl text-white">Atlas&nbsp;Edge</span>
+    </div>
+
+    <div class="mb-6">
+      <h2 class="atlas-font text-[24px] font-semibold tracking-[-0.02em] text-white">WiFi network</h2>
+      <p class="body-font mt-1.5 text-[13px] text-[#5A7394]">Choose which network {{ wifi_iface }} should join.</p>
+    </div>
+
+    {% if scan_error %}
+    <p class="body-font mb-5 rounded-lg border border-red-500/20 bg-red-500/10 px-3.5 py-2.5 text-[12px] text-red-400">Couldn't scan for networks: {{ scan_error }}</p>
+    {% endif %}
+
+    {% if connected %}
+    <div class="mb-5 flex items-center justify-between gap-3 rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-3.5 py-3">
+      <div class="flex items-center gap-2.5 text-white">
+        {{ ui.icon("wifi", 15) }}
+        <span class="body-font text-[13px] font-semibold">{{ connected.ssid }}</span>
+      </div>
+      <span class="body-font rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">Connected</span>
+    </div>
+    {% endif %}
+
+    <div id="network-list" class="mb-2 divide-y divide-white/6 overflow-hidden rounded-lg border border-white/8">
       {% for n in networks %}
       <button type="button"
-              class="network-row flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left transition-colors hover:bg-zinc-50 sm:px-5"
+              class="network-row flex w-full items-center justify-between gap-3 bg-[#080F1A] px-3.5 py-3 text-left transition-colors hover:bg-white/5"
               data-ssid="{{ n.ssid }}" data-secured="{{ '1' if n.secured else '0' }}">
         <span class="flex min-w-0 items-center gap-3">
-          {{ ui.signal_bars(n.signal) }}
-          <span class="body-font truncate text-sm font-medium text-[#1A1020]">{{ n.ssid }}</span>
+          {% set bars = 1 if n.signal < 25 else (2 if n.signal < 50 else (3 if n.signal < 75 else 4)) %}
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="13" viewBox="0 0 20 16" aria-hidden="true">
+            <rect x="0" y="10" width="3.5" height="6" rx="1" class="{{ 'fill-[#5B9BD5]' if bars >= 1 else 'fill-white/15' }}"/>
+            <rect x="5.5" y="7" width="3.5" height="9" rx="1" class="{{ 'fill-[#5B9BD5]' if bars >= 2 else 'fill-white/15' }}"/>
+            <rect x="11" y="4" width="3.5" height="12" rx="1" class="{{ 'fill-[#5B9BD5]' if bars >= 3 else 'fill-white/15' }}"/>
+            <rect x="16.5" y="0" width="3.5" height="16" rx="1" class="{{ 'fill-[#5B9BD5]' if bars >= 4 else 'fill-white/15' }}"/>
+          </svg>
+          <span class="body-font truncate text-[13px] font-medium text-white">{{ n.ssid }}</span>
         </span>
         {% if n.secured %}
-        <span class="shrink-0 text-zinc-400">{{ ui.icon("lock", 14) }}</span>
+        <span class="shrink-0 text-white/30">{{ ui.icon("lock", 13) }}</span>
         {% endif %}
       </button>
       {% else %}
-      <p class="body-font px-4 py-6 text-center text-sm text-zinc-400 sm:px-5">No other networks found nearby.</p>
+      <p class="body-font bg-[#080F1A] px-3.5 py-6 text-center text-[12px] text-[#5A7394]">No other networks found nearby.</p>
       {% endfor %}
     </div>
-  </section>
 
-  <section id="connect-panel" class="hidden overflow-hidden rounded-2xl border border-zinc-200/70 bg-white">
-    <div class="flex items-center gap-3 border-b border-zinc-100 px-4 py-4 sm:px-5">
-      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EEF4FB] text-[#427AB5]">
-        {{ ui.icon("wifi", 16) }}
-      </span>
-      <div>
-        <h2 id="connect-title" class="atlas-font text-[15px] font-black tracking-tight text-[#1A1020]">Connect</h2>
-        <p class="body-font mt-0.5 text-xs text-zinc-500">Enter the password for this network, if it has one.</p>
-      </div>
-    </div>
-    <form id="connect-form" class="space-y-4 p-4 sm:p-5">
-      <input type="hidden" id="connect-ssid" name="ssid" value="">
-      <div id="password-field" class="hidden">
-        <label for="connect-password" class="body-font mb-1.5 block text-xs font-medium text-zinc-500">Password</label>
-        <input id="connect-password" name="password" type="password" autocomplete="off" minlength="8"
-               class="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 body-font text-sm text-[#1A1020] outline-none transition-all focus:border-[#427AB5] focus:bg-white focus:ring-2 focus:ring-[#427AB5]/10">
-      </div>
-      <div class="flex items-center justify-between gap-3 pt-1">
-        <p id="connect-error" class="hidden body-font text-xs text-rose-600"></p>
+    <section id="connect-panel" class="hidden mt-5 rounded-lg border border-white/8 bg-[#080F1A] p-4">
+      <h3 id="connect-title" class="atlas-font text-[14px] font-semibold text-white">Connect</h3>
+      <form id="connect-form" class="mt-3 flex flex-col gap-3">
+        <input type="hidden" id="connect-ssid" name="ssid" value="">
+        <label id="password-field" class="hidden body-font text-[12px] font-medium text-[#5A7394]">
+          Password
+          <input id="connect-password" name="password" type="password" autocomplete="off" minlength="8"
+                 class="mt-1.5 w-full rounded-lg border border-white/8 bg-[#0C1523] px-3.5 py-2.5 text-[16px] text-white outline-none transition-colors placeholder:text-[#243650] focus:border-[#427AB5] sm:text-[13px]">
+        </label>
+        <p id="connect-error" class="hidden body-font text-[12px] text-red-400"></p>
         <button type="submit"
-                class="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-[#427AB5] px-4 py-2.5 body-font text-xs font-semibold text-white transition-colors hover:bg-[#3A6DA0]">
-          {{ ui.icon("wifi", 14) }} Connect
+                class="body-font w-full rounded-lg bg-[#427AB5] py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[#3A6DA0] active:bg-[#335F8C]">
+          Connect
         </button>
-      </div>
-    </form>
-  </section>
+      </form>
+    </section>
 
-  <section id="status-panel"
-           class="hidden overflow-hidden rounded-2xl border border-zinc-200/70 bg-white"
-           data-initial-status="{{ connect_state.status }}"
-           data-initial-ssid="{{ connect_state.ssid or '' }}"
-           data-initial-message="{{ connect_state.message or '' }}">
-    <div class="flex items-center gap-3 px-4 py-4 sm:px-5">
-      <span id="status-icon" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sky-50 text-sky-600">
-        {{ ui.icon("refresh-cw", 16) }}
-      </span>
-      <div>
-        <h2 id="status-title" class="atlas-font text-[15px] font-black tracking-tight text-[#1A1020]">Connecting…</h2>
-        <p id="status-message" class="body-font mt-0.5 text-xs text-zinc-500"></p>
+    <section id="status-panel"
+             class="hidden mt-5 rounded-lg border border-white/8 bg-[#080F1A] p-4"
+             data-initial-status="{{ connect_state.status }}"
+             data-initial-ssid="{{ connect_state.ssid or '' }}"
+             data-initial-message="{{ connect_state.message or '' }}">
+      <div class="flex items-center gap-3">
+        <span id="status-icon" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sky-500/15 text-sky-400">
+          {{ ui.icon("refresh-cw", 14) }}
+        </span>
+        <div>
+          <p id="status-title" class="atlas-font text-[13px] font-semibold text-white">Connecting…</p>
+          <p id="status-message" class="body-font mt-0.5 text-[12px] text-[#5A7394]"></p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <a href="/login" class="body-font mt-8 inline-flex items-center gap-1 text-[12px] font-semibold text-[#5B9BD5] hover:text-[#7DB3E8]">
+      Continue to sign in {{ ui.icon("chevron-right", 12) }}
+    </a>
+  </article>
 </div>
 
 <script>
@@ -165,15 +189,15 @@
 
   function showConnecting(ssid) {
     statusPanel.classList.remove("hidden");
-    statusIcon.className = "flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sky-50 text-sky-600";
+    statusIcon.className = "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sky-500/15 text-sky-400";
     statusTitle.textContent = "Connecting to " + ssid + "…";
     statusMessage.textContent = "";
   }
 
   function showResult(state) {
     var ok = state.status === "connected";
-    statusIcon.className = "flex h-9 w-9 shrink-0 items-center justify-center rounded-full " +
-      (ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700");
+    statusIcon.className = "flex h-8 w-8 shrink-0 items-center justify-center rounded-full " +
+      (ok ? "bg-emerald-500/15 text-emerald-400" : "bg-red-500/15 text-red-400");
     statusTitle.textContent = ok ? "Connected to " + state.ssid : "Couldn't connect to " + state.ssid;
     statusMessage.textContent = state.message || "";
     statusPanel.classList.remove("hidden");
@@ -212,4 +236,5 @@
   }
 })();
 </script>
-{% endblock %}
+</body>
+</html>
