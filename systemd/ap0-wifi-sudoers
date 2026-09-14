@@ -4,8 +4,14 @@
 # new network while ap0 is actively beaconing (confirmed live). See
 # atlas_edge/wifi.py's _pause_hotspot()/_resume_hotspot().
 #
-# Scoped to exactly these five commands, nothing broader — no general sudo
-# access, no wildcards.
+# The systemctl/script lines are literal, fixed commands — no wildcards.
+# The nmcli lines must use wildcards for the SSID/password (dynamic per
+# connect attempt) — NetworkManager's polkit policy treats persisting a
+# named connection profile (`nmcli connection add/delete/up`) as privileged
+# for a non-root, non-active-session process like this one, unlike the old
+# one-shot `device wifi connect` convenience command or plain scanning
+# (neither of which need this grant). Still scoped to nmcli + wlan0 only —
+# no other commands, no other interfaces, no general sudo access.
 #
 # Install (never edit /etc/sudoers directly, and always validate before it
 # takes effect — a malformed sudoers file can break sudo entirely):
@@ -18,3 +24,7 @@ limitify ALL=(root) NOPASSWD: /usr/bin/systemctl start atlas-ap0-watchdog.timer
 limitify ALL=(root) NOPASSWD: /usr/bin/systemctl stop atlas-ap0-hostapd.service
 limitify ALL=(root) NOPASSWD: /usr/bin/systemctl stop atlas-ap0-dnsmasq.service
 limitify ALL=(root) NOPASSWD: /home/limitify/Developer/Atlas-Edge/atlas_edge/scripts/ap0_setup.sh
+limitify ALL=(root) NOPASSWD: /usr/bin/nmcli connection delete *
+limitify ALL=(root) NOPASSWD: /usr/bin/nmcli connection add type wifi ifname wlan0 con-name * ssid *
+limitify ALL=(root) NOPASSWD: /usr/bin/nmcli connection add type wifi ifname wlan0 con-name * ssid * -- wifi-sec.key-mgmt wpa-psk wifi-sec.psk *
+limitify ALL=(root) NOPASSWD: /usr/bin/nmcli connection up * ifname wlan0

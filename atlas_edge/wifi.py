@@ -43,6 +43,7 @@ _rescan_lock = threading.Lock()
 
 _SUDO = "/usr/bin/sudo"
 _SYSTEMCTL = "/usr/bin/systemctl"
+_NMCLI = "/usr/bin/nmcli"
 # Absolute, not derived from ATLAS_EDGE_* env at runtime — this must match
 # exactly what the sudoers grant on the Pi allows (see
 # systemd/ap0-wifi-sudoers), and the script's own location is stable
@@ -228,9 +229,17 @@ def _connect_wlan0(iface: str, ssid: str, password: str) -> tuple[bool, str]:
     # Best-effort: drop any existing profile with this name first (nmcli
     # names one after the SSID by default) so we always start from a clean
     # slate — fine if there's nothing to delete.
+    # From here on, every nmcli call modifies a system connection profile —
+    # unlike scanning/listing (unprivileged, works fine as-is) or the old
+    # one-shot `device wifi connect` convenience command, NetworkManager's
+    # polkit policy treats persisting a named connection as a privileged
+    # operation ("Insufficient privileges" otherwise for a non-root,
+    # non-active-session process like this one). Routed through the
+    # narrowly-scoped sudoers grant in systemd/ap0-wifi-sudoers.
     try:
         subprocess.run(
-            ["nmcli", "connection", "delete", ssid], capture_output=True, timeout=10, check=False
+            [_SUDO, "-n", _NMCLI, "connection", "delete", ssid],
+            capture_output=True, timeout=10, check=False,
         )
     except (OSError, subprocess.SubprocessError) as exc:
         log.warning("pre-connect delete of stale profile %r failed: %s", ssid, exc)
@@ -244,7 +253,7 @@ def _connect_wlan0(iface: str, ssid: str, password: str) -> tuple[bool, str]:
     # detection step entirely (the same approach used for the ap0 hotspot's
     # own profile, which has never hit this problem).
     add_cmd = [
-        "nmcli", "connection", "add",
+        _SUDO, "-n", _NMCLI, "connection", "add",
         "type", "wifi",
         "ifname", iface,
         "con-name", ssid,
@@ -261,7 +270,7 @@ def _connect_wlan0(iface: str, ssid: str, password: str) -> tuple[bool, str]:
     if proc.returncode != 0:
         return False, (proc.stderr.strip() or proc.stdout.strip() or f"nmcli exited {proc.returncode}")
 
-    up_cmd = ["nmcli", "connection", "up", ssid, "ifname", iface]
+    up_cmd = [_SUDO, "-n", _NMCLI, "connection", "up", ssid, "ifname", iface]
     try:
         proc = subprocess.run(
             up_cmd, capture_output=True, text=True, timeout=_CONNECT_TIMEOUT_SECONDS, check=False

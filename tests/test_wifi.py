@@ -116,12 +116,15 @@ def test_scan_networks_never_mentions_ap0_or_hotspot(monkeypatch):
     assert "wlan0" in captured["cmd"]
 
 
+SUDO_NMCLI = [wifi._SUDO, "-n", wifi._NMCLI]
+
+
 def test_connect_rescans_deletes_stale_profile_adds_then_brings_up(monkeypatch):
     calls = []
 
     def fake_run(cmd, **kwargs):
         calls.append(cmd)
-        if cmd[:4] == ["nmcli", "connection", "up", "MySchool"]:
+        if cmd == SUDO_NMCLI + ["connection", "up", "MySchool", "ifname", "wlan0"]:
             return FakeCompleted(0, "Device 'wlan0' successfully activated.", "")
         return FakeCompleted(0, "", "")
 
@@ -130,13 +133,13 @@ def test_connect_rescans_deletes_stale_profile_adds_then_brings_up(monkeypatch):
     assert ok is True
     assert "successfully activated" in message
     assert calls[0] == ["nmcli", "device", "wifi", "rescan", "ifname", "wlan0"]
-    assert calls[1] == ["nmcli", "connection", "delete", "MySchool"]
-    assert calls[2] == [
-        "nmcli", "connection", "add", "type", "wifi", "ifname", "wlan0",
+    assert calls[1] == SUDO_NMCLI + ["connection", "delete", "MySchool"]
+    assert calls[2] == SUDO_NMCLI + [
+        "connection", "add", "type", "wifi", "ifname", "wlan0",
         "con-name", "MySchool", "ssid", "MySchool",
         "--", "wifi-sec.key-mgmt", "wpa-psk", "wifi-sec.psk", "hunter22",
     ]
-    assert calls[3] == ["nmcli", "connection", "up", "MySchool", "ifname", "wlan0"]
+    assert calls[3] == SUDO_NMCLI + ["connection", "up", "MySchool", "ifname", "wlan0"]
     # Password only ever appears as its own argv element in the "add" step —
     # never concatenated into another arg, never in the "up" step.
     assert "hunter22" not in " ".join(calls[3])
@@ -161,7 +164,7 @@ def test_connect_add_failure_is_reported_without_attempting_up(monkeypatch):
 
     def fake_run(cmd, **kwargs):
         calls.append(cmd)
-        if cmd[:3] == ["nmcli", "connection", "add"]:
+        if cmd[:5] == SUDO_NMCLI + ["connection", "add"]:
             return FakeCompleted(1, "", "Error: failed to add connection")
         return FakeCompleted(0, "unreachable — up should never be called", "")
 
@@ -169,12 +172,12 @@ def test_connect_add_failure_is_reported_without_attempting_up(monkeypatch):
     ok, message = wifi.connect("wlan0", "MySchool", "hunter22", **HOTSPOT_KWARGS)
     assert ok is False
     assert "failed to add connection" in message
-    assert not any(c[:3] == ["nmcli", "connection", "up"] for c in calls)
+    assert not any(c[:5] == SUDO_NMCLI + ["connection", "up"] for c in calls)
 
 
 def test_connect_wrong_password_returns_failure_with_nmcli_message(monkeypatch):
     def fake_run(cmd, **kwargs):
-        if cmd[:3] == ["nmcli", "connection", "up"]:
+        if cmd[:5] == SUDO_NMCLI + ["connection", "up"]:
             return FakeCompleted(4, "", "Error: Secrets were required, but not provided.")
         return FakeCompleted(0, "", "")
 
@@ -187,7 +190,7 @@ def test_connect_wrong_password_returns_failure_with_nmcli_message(monkeypatch):
 
 def test_connect_timeout_on_up_is_reported_as_failure_not_raised(monkeypatch):
     def fake_run(cmd, **kwargs):
-        if cmd[:3] == ["nmcli", "connection", "up"]:
+        if cmd[:5] == SUDO_NMCLI + ["connection", "up"]:
             raise subprocess.TimeoutExpired(cmd, kwargs.get("timeout", 0))
         return FakeCompleted(0, "", "")
 
@@ -199,9 +202,9 @@ def test_connect_timeout_on_up_is_reported_as_failure_not_raised(monkeypatch):
 
 def test_connect_delete_failure_does_not_block_the_real_connect_attempt(monkeypatch):
     def fake_run(cmd, **kwargs):
-        if cmd[:3] == ["nmcli", "connection", "delete"]:
+        if cmd[:5] == SUDO_NMCLI + ["connection", "delete"]:
             raise OSError("nmcli not found")
-        if cmd[:3] == ["nmcli", "connection", "up"]:
+        if cmd[:5] == SUDO_NMCLI + ["connection", "up"]:
             return FakeCompleted(0, "Device 'wlan0' successfully activated.", "")
         return FakeCompleted(0, "", "")
 
@@ -220,7 +223,7 @@ def test_connect_pauses_and_resumes_the_hotspot_around_the_attempt(monkeypatch):
 
     def fake_run(cmd, **kwargs):
         calls.append(cmd)
-        if cmd[:4] == ["nmcli", "connection", "up", "MySchool"]:
+        if cmd == SUDO_NMCLI + ["connection", "up", "MySchool", "ifname", "wlan0"]:
             return FakeCompleted(0, "Device 'wlan0' successfully activated.", "")
         return FakeCompleted(0, "", "")
 
@@ -228,7 +231,12 @@ def test_connect_pauses_and_resumes_the_hotspot_around_the_attempt(monkeypatch):
     ok, _ = wifi.connect("wlan0", "MySchool", "hunter22", **HOTSPOT_KWARGS)
     assert ok is True
 
-    sudo_calls = [c for c in calls if c[:2] == ["/usr/bin/sudo", "-n"]]
+    # Only the hotspot-control calls (systemctl + the setup script) — the
+    # nmcli-connection sudo calls are a separate concern, covered above.
+    sudo_calls = [
+        c for c in calls
+        if c[:2] == ["/usr/bin/sudo", "-n"] and wifi._NMCLI not in c
+    ]
     # Watchdog timer stopped first (so it can't fight the pause), then
     # hostapd/dnsmasq stopped, then — after the connect logic — ap0_setup.sh
     # re-run and the watchdog timer started again.
