@@ -146,7 +146,9 @@ def logout(request: Request):
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request):
     if not _logged_in(request):
-        return _redirect("/login")
+        # Not /login directly — WiFi setup comes first, on the admin
+        # hotspot or anywhere else this root URL is hit with no session.
+        return _redirect("/wifi-setup")
     return templates.TemplateResponse("status.html", _ctx(request, **_status_data()))
 
 
@@ -587,3 +589,22 @@ def dev_simulate_tap(request: Request, card_number: str = Form(...)):
     if card:
         storage.mock_enqueue_tap(card_number=card, occurred_at=utcnow_iso())
     return _redirect("/dev")
+
+
+# ── captive-portal catch-all — MUST stay the last route registered, so it
+# never shadows a real one. Paired with two things outside this app: the
+# DNS wildcard in dnsmasq-atlas-ap0.conf (every hostname an ap0 client
+# looks up resolves to this Pi) and the port-80 -> web-port NAT redirect in
+# ap0_setup.sh. Together, a phone's own OS-level captive-portal probe
+# (captive.apple.com/hotspot-detect.html, connectivitycheck.gstatic.com/
+# generate_204, msftconnecttest.com/connecttest.txt, ...) lands here
+# instead of getting the response it expects, which is what makes the OS
+# show its automatic "Sign in to network" prompt — tapping it opens this
+# same URL again in a restricted in-app browser, which then follows this
+# redirect to the real page. HTTPS-based probes can't be caught this way
+# (no valid certificate for an arbitrary hijacked hostname) — that's a
+# known, accepted limitation shared by DIY captive portals in general; the
+# plain-HTTP probes are why these OS checks exist in the first place. ─────
+@app.get("/{unmatched_path:path}")
+def captive_portal_catch_all(unmatched_path: str):
+    return _redirect("/wifi-setup")

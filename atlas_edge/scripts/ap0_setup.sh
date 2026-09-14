@@ -2,7 +2,8 @@
 # Brings up the Atlas-Edge admin hotspot (ap0) on top of the station radio
 # (wlan0 — a USB adapter; this Pi's onboard WiFi chip doesn't attach at
 # boot). Run at boot by systemd/atlas-ap0-setup.service, and re-run by the
-# watchdog (ap0_watchdog.sh) if the hotspot ever drops.
+# watchdog (ap0_watchdog.sh) if the hotspot ever drops or wlan0's channel
+# changes.
 #
 # The USB adapter (rtl8xxxu) supports concurrent station + AP mode on one
 # radio — confirmed working with hostapd directly. NetworkManager's own
@@ -19,6 +20,19 @@
 # kernel refuse to bring the interface up at all ("Name not unique on
 # network"). So this script always (re)assigns ap0 a distinct
 # locally-administered MAC derived from wlan0's, every run.
+#
+# ap0 and wlan0 share one radio, so they must run on the same channel — this
+# script normally takes wlan0's current channel. But the hotspot's whole
+# purpose is to let an admin fix wlan0 when it's broken, so it must NOT
+# depend on wlan0 already working: if wlan0 isn't associated (dead network,
+# wrong password, out of range, brand-new Pi), it brings the hotspot up
+# anyway on a fixed fallback channel instead of failing outright. The
+# watchdog then realigns the channel once wlan0 does associate.
+#
+# Also does the captive-portal wiring: dnsmasq answers every DNS query on
+# ap0 with this Pi's own address (so joining a phone doesn't need to know a
+# hostname), and a port-80 -> web-port NAT redirect (ap0 only, never wlan0)
+# so the app actually receives the OS's plain-HTTP captive-portal probes.
 #
 # Idempotent — safe to re-run without tearing down an already-working setup.
 set -euo pipefail
@@ -37,6 +51,8 @@ fi
 WIFI_IFACE="${ATLAS_EDGE_WIFI_IFACE:-wlan0}"
 HOTSPOT_IFACE="${ATLAS_EDGE_HOTSPOT_IFACE:-ap0}"
 ASSOC_TIMEOUT_SECONDS="${ATLAS_EDGE_WIFI_ASSOC_TIMEOUT_SECONDS:-60}"
+FALLBACK_CHANNEL="${ATLAS_EDGE_HOTSPOT_FALLBACK_CHANNEL:-6}"
+WEB_PORT="${ATLAS_EDGE_WEB_PORT:-8080}"
 
 HOTSPOT_SSID="${ATLAS_EDGE_HOTSPOT_SSID:?ATLAS_EDGE_HOTSPOT_SSID must be set}"
 HOTSPOT_PASSWORD="${ATLAS_EDGE_HOTSPOT_PASSWORD:?ATLAS_EDGE_HOTSPOT_PASSWORD must be set}"
@@ -55,23 +71,31 @@ if [ "${#HOTSPOT_PASSWORD}" -lt 8 ]; then
   fail "ATLAS_EDGE_HOTSPOT_PASSWORD must be at least 8 characters (WPA2 requirement)."
 fi
 
-# ── 1. Wait for the station interface to associate ─────────────────────
-# ap0 rides on wlan0's radio/channel, so there's nothing to bind it to
-# until wlan0 has actually joined a network, and we need its channel.
+# ── 1. Wait (briefly) for the station interface to associate ───────────
+# Best-effort only — the hotspot must come up even if this never succeeds,
+# since fixing wlan0 is exactly what the hotspot is for.
 log "Waiting up to ${ASSOC_TIMEOUT_SECONDS}s for ${WIFI_IFACE} to associate…"
 waited=0
 until iw dev "$WIFI_IFACE" link 2>/dev/null | grep -q "Connected to"; do
   if [ "$waited" -ge "$ASSOC_TIMEOUT_SECONDS" ]; then
-    fail "${WIFI_IFACE} did not associate with any network within ${ASSOC_TIMEOUT_SECONDS}s — cannot bind ${HOTSPOT_IFACE} to it. Check the USB adapter is seated and the school network is in range."
+    log "WARNING: ${WIFI_IFACE} did not associate within ${ASSOC_TIMEOUT_SECONDS}s — bringing the hotspot up on fallback channel ${FALLBACK_CHANNEL} anyway, so it's reachable to fix this via /wifi-setup. The watchdog will realign the channel once ${WIFI_IFACE} does connect."
+    break
   fi
   sleep 2
   waited=$((waited + 2))
 done
-log "${WIFI_IFACE} is associated."
 
-WIFI_CHANNEL=$(iw dev "$WIFI_IFACE" info | awk '/channel/ {print $2; exit}')
-[ -n "$WIFI_CHANNEL" ] || fail "Could not determine ${WIFI_IFACE}'s current channel (iw dev ${WIFI_IFACE} info)."
-log "${WIFI_IFACE} is on channel ${WIFI_CHANNEL} — ${HOTSPOT_IFACE} must share it (same radio)."
+if iw dev "$WIFI_IFACE" link 2>/dev/null | grep -q "Connected to"; then
+  log "${WIFI_IFACE} is associated."
+  WIFI_CHANNEL=$(iw dev "$WIFI_IFACE" info | awk '/channel/ {print $2; exit}')
+  if [ -z "$WIFI_CHANNEL" ]; then
+    log "WARNING: ${WIFI_IFACE} is associated but its channel couldn't be determined — using fallback channel ${FALLBACK_CHANNEL}."
+    WIFI_CHANNEL="$FALLBACK_CHANNEL"
+  fi
+else
+  WIFI_CHANNEL="$FALLBACK_CHANNEL"
+fi
+log "${HOTSPOT_IFACE} will use channel ${WIFI_CHANNEL} (shares ${WIFI_IFACE}'s radio)."
 
 # ── 2. Create the AP interface, idempotently ────────────────────────────
 if iw dev "$HOTSPOT_IFACE" info >/dev/null 2>&1; then
@@ -124,13 +148,21 @@ ctrl_interface=/var/run/hostapd
 EOF
 chmod 600 "$HOSTAPD_CONF"
 
+# no-resolv + address=/#/... : every DNS query from an ap0 client resolves
+# to this Pi, no matter the hostname — that's what makes a phone's own
+# captive-portal probe (captive.apple.com, connectivitycheck.gstatic.com,
+# msftconnecttest.com, ...) land on this server at all. Scoped to this
+# dnsmasq instance only (bind-interfaces + interface=ap0 above it) — the
+# Pi's own DNS resolution via wlan0/eth0 is untouched.
 cat > "$DNSMASQ_CONF" <<EOF
 interface=${HOTSPOT_IFACE}
 bind-interfaces
 except-interface=lo
+no-resolv
 dhcp-range=${HOTSPOT_DHCP_RANGE_START},${HOTSPOT_DHCP_RANGE_END},12h
 dhcp-option=3,${HOTSPOT_IP}
 dhcp-option=6,${HOTSPOT_IP}
+address=/#/${HOTSPOT_IP}
 EOF
 
 log "Restarting atlas-ap0-hostapd.service and atlas-ap0-dnsmasq.service…"
@@ -138,5 +170,18 @@ systemctl restart atlas-ap0-hostapd.service \
   || fail "atlas-ap0-hostapd.service failed to start — check: journalctl -u atlas-ap0-hostapd.service"
 systemctl restart atlas-ap0-dnsmasq.service \
   || fail "atlas-ap0-dnsmasq.service failed to start — check: journalctl -u atlas-ap0-dnsmasq.service"
+
+# ── 7. Redirect port 80 (captive-portal HTTP probes) to the app ────────
+# OS captive-portal checks hit plain port 80 — the app itself only listens
+# on WEB_PORT (8080 by default), so NAT port 80 -> WEB_PORT for traffic
+# arriving on ap0 only. Never wlan0 — this must never touch the school
+# network. Idempotent: only adds the rule if it isn't already there.
+if ! iptables -t nat -C PREROUTING -i "$HOTSPOT_IFACE" -p tcp --dport 80 -j REDIRECT --to-port "$WEB_PORT" 2>/dev/null; then
+  iptables -t nat -A PREROUTING -i "$HOTSPOT_IFACE" -p tcp --dport 80 -j REDIRECT --to-port "$WEB_PORT" \
+    || fail "Failed to add the port-80 captive-portal redirect (iptables)."
+  log "Added port 80 -> ${WEB_PORT} redirect for ${HOTSPOT_IFACE}."
+else
+  log "Port 80 -> ${WEB_PORT} redirect already present for ${HOTSPOT_IFACE}."
+fi
 
 log "Admin hotspot '${HOTSPOT_SSID}' ready on ${HOTSPOT_IFACE} (${HOTSPOT_IP})."
