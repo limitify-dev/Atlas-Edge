@@ -1,7 +1,9 @@
 [Unit]
 Description=Atlas-Edge — dnsmasq (DHCP) for the ap0 admin hotspot
-After=atlas-ap0-hostapd.service
-BindsTo=atlas-ap0-setup.service
+# Deliberately no After=/BindsTo=atlas-ap0-setup.service — see the same note
+# in atlas-ap0-hostapd.service; ordering against the still-running setup
+# unit deadlocks it. The setup script starts this after hostapd, in order,
+# imperatively — no systemd-level ordering needed.
 
 [Service]
 Type=simple

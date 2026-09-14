@@ -1,7 +1,10 @@
 [Unit]
 Description=Atlas-Edge — hostapd for the ap0 admin hotspot
-After=atlas-ap0-setup.service
-BindsTo=atlas-ap0-setup.service
+# Deliberately no After=/BindsTo=atlas-ap0-setup.service: that unit's own
+# ExecStart is what calls `systemctl restart` on this one, and since it's a
+# oneshot that isn't "active" until its script returns, any ordering
+# dependency back on it deadlocks (this unit waits for setup to be active;
+# setup waits for its script, which is waiting for this unit to start).
 
 [Service]
 Type=simple
