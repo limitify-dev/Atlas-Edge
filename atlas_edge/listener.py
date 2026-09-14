@@ -143,13 +143,12 @@ class Listener:
             source="live",
             direction=self._classify(tap.timestamp),
             debounce_seconds=self.s.tap_debounce_seconds,
-            max_taps_per_day=self.s.max_taps_per_day_per_card,
         )
         self.db.set_device_status(connected=True, last_seen=utcnow_iso())
         if is_new:
             log.info("Tap: %s (%s) @ %s", tap.card_number, name or "?", tap.timestamp)
         else:
-            log.info("Tap: %s ignored (duplicate or double-tap) @ %s", tap.card_number, tap.timestamp)
+            log.info("Tap: %s ignored (double-tap) @ %s", tap.card_number, tap.timestamp)
 
     def _housekeeping(self) -> None:
         # live_capture()'s recv just times out (yields None) when the socket
@@ -210,7 +209,6 @@ class Listener:
                 source="reconcile",
                 direction=self._classify(tap.timestamp),
                 debounce_seconds=self.s.tap_debounce_seconds,
-            max_taps_per_day=self.s.max_taps_per_day_per_card,
             ):
                 added += 1
             try:

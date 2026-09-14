@@ -63,63 +63,14 @@ def test_debounce_is_per_card_not_global(tmp_path):
     assert s.queue_stats()["pending_total"] == 2
 
 
-def test_max_taps_per_day_drops_a_third_tap(tmp_path):
-    s = fresh(tmp_path)
-    assert s.enqueue_event(
-        card_number="1001", name="Ada", occurred_at="2026-01-01T07:00:00+00:00",
-        source="live", max_taps_per_day=2,
-    ) is True  # check-in
-    assert s.enqueue_event(
-        card_number="1001", name="Ada", occurred_at="2026-01-01T15:00:00+00:00",
-        source="live", max_taps_per_day=2,
-    ) is True  # check-out
-    assert s.enqueue_event(
-        card_number="1001", name="Ada", occurred_at="2026-01-01T17:00:00+00:00",
-        source="live", max_taps_per_day=2,
-    ) is False  # Atlas would just no-op this anyway
-    assert s.queue_stats()["pending_total"] == 2
-
-
-def test_max_taps_per_day_resets_the_next_day(tmp_path):
-    s = fresh(tmp_path)
-    assert s.enqueue_event(
-        card_number="1001", name="Ada", occurred_at="2026-01-01T07:00:00+00:00",
-        source="live", max_taps_per_day=2,
-    ) is True
-    assert s.enqueue_event(
-        card_number="1001", name="Ada", occurred_at="2026-01-01T15:00:00+00:00",
-        source="live", max_taps_per_day=2,
-    ) is True
-    assert s.enqueue_event(
-        card_number="1001", name="Ada", occurred_at="2026-01-02T07:00:00+00:00",
-        source="live", max_taps_per_day=2,
-    ) is True  # a new day — cap resets
-    assert s.queue_stats()["pending_total"] == 3
-
-
-def test_max_taps_per_day_is_per_card(tmp_path):
-    s = fresh(tmp_path)
-    assert s.enqueue_event(
-        card_number="1001", name="Ada", occurred_at="2026-01-01T07:00:00+00:00",
-        source="live", max_taps_per_day=2,
-    ) is True
-    assert s.enqueue_event(
-        card_number="1001", name="Ada", occurred_at="2026-01-01T15:00:00+00:00",
-        source="live", max_taps_per_day=2,
-    ) is True
-    assert s.enqueue_event(
-        card_number="1002", name="Bob", occurred_at="2026-01-01T15:30:00+00:00",
-        source="live", max_taps_per_day=2,
-    ) is True  # a different card's own cap, untouched by Ada's
-    assert s.queue_stats()["pending_total"] == 3
-
-
-def test_max_taps_per_day_disabled_when_zero(tmp_path):
+def test_a_card_can_tap_more_than_twice_in_a_day(tmp_path):
+    # Whether a tap "counts" for attendance is Atlas's call, not Edge's —
+    # Edge forwards every non-debounced tap and lets Atlas decide.
     s = fresh(tmp_path)
     for hour in (7, 12, 15, 18):
         assert s.enqueue_event(
             card_number="1001", name="Ada", occurred_at=f"2026-01-01T{hour:02d}:00:00+00:00",
-            source="live", max_taps_per_day=0,
+            source="live",
         ) is True
     assert s.queue_stats()["pending_total"] == 4
 

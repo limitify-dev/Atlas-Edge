@@ -117,32 +117,6 @@ def _within_debounce(
     return False
 
 
-def _taps_today(conn: sqlite3.Connection, card_number: str, occurred_at: str) -> int:
-    """How many of this card's recent taps fall on the same calendar day as
-    ``occurred_at`` (compared in whatever offset it already carries — device
-    taps all share one consistent offset, so this doesn't need its own
-    timezone conversion). Atlas already treats a card's 3rd+ tap in a day as
-    a no-op (first tap = check-in, next = check-out, rest ignored) — this
-    just avoids spending a request finding that out."""
-    try:
-        day = datetime.fromisoformat(occurred_at).date()
-    except ValueError:
-        return 0
-    rows = conn.execute(
-        "SELECT occurred_at FROM event_queue WHERE card_number=? "
-        "ORDER BY id DESC LIMIT 20",
-        (card_number,),
-    ).fetchall()
-    count = 0
-    for row in rows:
-        try:
-            if datetime.fromisoformat(row["occurred_at"]).date() == day:
-                count += 1
-        except ValueError:
-            continue
-    return count
-
-
 class Storage:
     def __init__(self, db_path: Path | str) -> None:
         self.db_path = Path(db_path)
@@ -250,25 +224,21 @@ class Storage:
         source: str,
         direction: Optional[str] = None,
         debounce_seconds: int = 0,
-        max_taps_per_day: int = 0,
     ) -> bool:
         """Insert a tap. Returns True if it was new, False if it's a dupe —
         either the exact same (card, timestamp) already queued/sent (the live
-        stream and reconciliation both reporting one tap), the same card
+        stream and reconciliation both reporting one tap), or the same card
         tapping again too soon after its own last tap to be a real second
-        event when ``debounce_seconds`` > 0 (a fumbled double-tap), or,
-        when ``max_taps_per_day`` > 0, a tap beyond that many already
-        recorded for this card today — Atlas only ever acts on the first two
-        (check-in, check-out) and no-ops the rest, so there's nothing to gain
-        from sending them."""
+        event when ``debounce_seconds`` > 0 (a fumbled double-tap). Whether a
+        tap actually counts for attendance (first of the day vs. a repeat) is
+        Atlas's call, not Edge's — every non-debounced tap gets forwarded and
+        Atlas decides what to do with it."""
         dedup_key = f"{card_number}|{occurred_at}"
         now = utcnow_iso()
         with self._conn() as conn:
             if debounce_seconds > 0 and _within_debounce(
                 conn, card_number, occurred_at, debounce_seconds
             ):
-                return False
-            if max_taps_per_day > 0 and _taps_today(conn, card_number, occurred_at) >= max_taps_per_day:
                 return False
             cur = conn.execute(
                 "INSERT OR IGNORE INTO event_queue "

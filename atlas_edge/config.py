@@ -91,11 +91,6 @@ class Settings(BaseSettings):
     tap_debounce_seconds: int = Field(
         30, description="A repeat tap from the same card within this many seconds is dropped as a double-tap, not logged again"
     )
-    # Atlas only ever acts on a card's first two taps in a day (check-in,
-    # check-out) — anything past that is already a no-op server-side, so
-    # this just stops Edge from spending a request finding that out. Doesn't
-    # affect Atlas's own attendance data either way; it's purely local.
-    max_taps_per_day_per_card: int = 2
 
     # ── Timers (seconds) ───────────────────────────────────────────────────
     flush_interval_seconds: int = 15
