@@ -128,7 +128,7 @@ cat > "$DNSMASQ_CONF" <<EOF
 interface=${HOTSPOT_IFACE}
 bind-interfaces
 except-interface=lo
-dhcp-range=${HOTSPOT_DHCP_RANGE_START},${HOTSPOT_DHCP_RANGE_END},${HOTSPOT_PREFIX}h,12h
+dhcp-range=${HOTSPOT_DHCP_RANGE_START},${HOTSPOT_DHCP_RANGE_END},12h
 dhcp-option=3,${HOTSPOT_IP}
 dhcp-option=6,${HOTSPOT_IP}
 EOF
