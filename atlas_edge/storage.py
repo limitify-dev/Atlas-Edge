@@ -219,6 +219,17 @@ class Storage:
             "device_status", {"connected": False, "last_seen": None, "note": ""}
         )
 
+    # ── wifi connect attempt (written by the /wifi-setup background thread,
+    # polled by its own page) — never holds the submitted password. ───────
+    def set_wifi_connect_state(self, state: dict) -> None:
+        self.set_json("wifi_connect_state", state)
+
+    def get_wifi_connect_state(self) -> dict:
+        return self.get_json(
+            "wifi_connect_state",
+            {"ssid": None, "status": "idle", "message": "", "started_at": None, "finished_at": None},
+        )
+
     # ── device users snapshot (populated by the "list_users" command) ──
     def set_device_users_snapshot(self, users: list[dict]) -> None:
         self.set_json("device_users_snapshot", users)

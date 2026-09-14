@@ -15,14 +15,16 @@ from __future__ import annotations
 
 import json
 import logging
+import threading
 from pathlib import Path
 
 from fastapi import FastAPI, File, Form, Request, UploadFile
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 
+from .. import wifi
 from ..atlas_client import AtlasAuthError, AtlasError
 from ..config import get_settings
 from ..drivers import build_atlas_client
@@ -451,6 +453,81 @@ def device_user_edit_submit(
         requested_by=request.session.get("email", ""),
     )
     return _redirect(f"/commands/{cmd_id}")
+
+
+# ── WiFi network setup (which network wlan0 joins — never touches ap0,
+# the separate admin hotspot this page itself is normally reached through).
+# Gated the same as every other page: `_logged_in` only checks a local
+# session cookie + a locally-stored Atlas token (see atlas_client.py's
+# `is_authenticated`), no live call out to Atlas — so it still works from
+# the admin hotspot even while wlan0 itself is down/mid-reconfiguration,
+# which is exactly when this page is needed. Note this app binds 0.0.0.0
+# (see Settings.web_host), so it's technically also reachable over wlan0's
+# own address, not just ap0's — the background-thread connect below isn't
+# just a nicety, it's what keeps a request arriving over wlan0 from being
+# cut off by the very reconnect it triggered. ─────────────────────────────
+def _run_wifi_connect(iface: str, ssid: str, password: str) -> None:
+    ok, message = wifi.connect(iface, ssid, password)
+    log.info("wifi connect to %r on %s: %s", ssid, iface, "ok" if ok else "failed")
+    storage.set_wifi_connect_state(
+        {
+            "ssid": ssid,
+            "status": "connected" if ok else "failed",
+            "message": message,
+            "finished_at": utcnow_iso(),
+        }
+    )
+
+
+@app.get("/wifi-setup", response_class=HTMLResponse)
+def wifi_setup_page(request: Request):
+    if not _logged_in(request):
+        return _redirect("/login")
+    try:
+        networks = wifi.scan_networks(settings.wifi_iface)
+        scan_error = None
+    except wifi.WifiError as exc:
+        networks = []
+        scan_error = str(exc)
+    connected = next((n for n in networks if n.connected), None)
+    others = [n for n in networks if not n.connected]
+    return templates.TemplateResponse(
+        "wifi_setup.html",
+        _ctx(
+            request,
+            wifi_iface=settings.wifi_iface,
+            connected=connected,
+            networks=others,
+            scan_error=scan_error,
+            connect_state=storage.get_wifi_connect_state(),
+        ),
+    )
+
+
+@app.post("/wifi-setup")
+def wifi_setup_connect(request: Request, ssid: str = Form(...), password: str = Form("")):
+    if not _logged_in(request):
+        return JSONResponse({"error": "unauthenticated"}, status_code=401)
+    ssid = ssid.strip()
+    if not ssid:
+        return JSONResponse({"error": "Choose a network first."}, status_code=400)
+    storage.set_wifi_connect_state(
+        {"ssid": ssid, "status": "connecting", "message": "", "started_at": utcnow_iso(), "finished_at": None}
+    )
+    threading.Thread(
+        target=_run_wifi_connect,
+        args=(settings.wifi_iface, ssid, password),
+        name="wifi-connect",
+        daemon=True,
+    ).start()
+    return JSONResponse({"ok": True, "ssid": ssid, "status": "connecting"})
+
+
+@app.get("/wifi-setup/status")
+def wifi_setup_status(request: Request):
+    if not _logged_in(request):
+        return JSONResponse({"error": "unauthenticated"}, status_code=401)
+    return JSONResponse(storage.get_wifi_connect_state())
 
 
 # ── command progress ────────────────────────────────────────────────────

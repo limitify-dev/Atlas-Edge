@@ -24,6 +24,7 @@
         ("/enroll", "credit-card", "Enroll cards", p.startswith("/enroll")),
         ("/sync", "refresh-cw", "Sync from Atlas", p.startswith("/sync")),
         ("/device-users", "users", "Device users", p.startswith("/device-users")),
+        ("/wifi-setup", "wifi", "WiFi network", p.startswith("/wifi-setup")),
       ] %}
       {% for href, ic, label, active in links %}
       <a href="{{ href }}"

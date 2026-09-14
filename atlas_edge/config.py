@@ -58,6 +58,13 @@ class Settings(BaseSettings):
         "edge-pi-01", description="Stable id for this Pi/gateway, sent with every event"
     )
 
+    # ── WiFi (wlan0 — the station radio; see atlas_edge/wifi.py) ───────────
+    # Drives the /wifi-setup admin page, which picks which network wlan0
+    # joins. Same variable name the ap0_setup.sh/ap0_watchdog.sh shell
+    # scripts already read straight from .env for the same interface — kept
+    # in sync deliberately, one name for one physical adapter.
+    wifi_iface: str = "wlan0"
+
     # ── Local state ────────────────────────────────────────────────────────
     db_path: Path = Path("./data/atlas_edge.sqlite3")
 

@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% import "_ui.html" as ui %}
+{% block title %}{% endblock %}
+{% block topbar_title %}WiFi network{% endblock %}
+{% block body %}
+<div class="space-y-5">
+  {{ ui.section_head("WiFi network", "Choose which network " ~ wifi_iface ~ " should join. The admin hotspot you're connected to right now is a separate connection on its own interface — changing this never drops it.") }}
+
+  {% if scan_error %}
+  <p class="body-font rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-sm text-rose-700">Couldn't scan for networks: {{ scan_error }}</p>
+  {% endif %}
+
+  {% if connected %}
+  <section class="overflow-hidden rounded-2xl border border-emerald-200/60 bg-emerald-50/40">
+    <div class="flex items-center justify-between gap-3 px-4 py-4 sm:px-5">
+      <div class="flex items-center gap-3">
+        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+          {{ ui.icon("wifi", 16) }}
+        </span>
+        <div>
+          <h2 class="atlas-font text-[15px] font-black tracking-tight text-[#1A1020]">{{ connected.ssid }}</h2>
+          <p class="body-font mt-0.5 text-xs text-zinc-500">Currently connected on {{ wifi_iface }}</p>
+        </div>
+      </div>
+      {{ ui.badge("Connected", "ok") }}
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="overflow-hidden rounded-2xl border border-zinc-200/70 bg-white">
+    <div class="flex items-center gap-3 border-b border-zinc-100 px-4 py-4 sm:px-5">
+      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EEF4FB] text-[#427AB5]">
+        {{ ui.icon("wifi", 16) }}
+      </span>
+      <div>
+        <h2 class="atlas-font text-[15px] font-black tracking-tight text-[#1A1020]">Available networks</h2>
+        <p class="body-font mt-0.5 text-xs text-zinc-500">Tap a network to connect.</p>
+      </div>
+    </div>
+
+    <div id="network-list" class="divide-y divide-zinc-100">
+      {% for n in networks %}
+      <button type="button"
+              class="network-row flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left transition-colors hover:bg-zinc-50 sm:px-5"
+              data-ssid="{{ n.ssid }}" data-secured="{{ '1' if n.secured else '0' }}">
+        <span class="flex min-w-0 items-center gap-3">
+          {{ ui.signal_bars(n.signal) }}
+          <span class="body-font truncate text-sm font-medium text-[#1A1020]">{{ n.ssid }}</span>
+        </span>
+        {% if n.secured %}
+        <span class="shrink-0 text-zinc-400">{{ ui.icon("lock", 14) }}</span>
+        {% endif %}
+      </button>
+      {% else %}
+      <p class="body-font px-4 py-6 text-center text-sm text-zinc-400 sm:px-5">No other networks found nearby.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="connect-panel" class="hidden overflow-hidden rounded-2xl border border-zinc-200/70 bg-white">
+    <div class="flex items-center gap-3 border-b border-zinc-100 px-4 py-4 sm:px-5">
+      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EEF4FB] text-[#427AB5]">
+        {{ ui.icon("wifi", 16) }}
+      </span>
+      <div>
+        <h2 id="connect-title" class="atlas-font text-[15px] font-black tracking-tight text-[#1A1020]">Connect</h2>
+        <p class="body-font mt-0.5 text-xs text-zinc-500">Enter the password for this network, if it has one.</p>
+      </div>
+    </div>
+    <form id="connect-form" class="space-y-4 p-4 sm:p-5">
+      <input type="hidden" id="connect-ssid" name="ssid" value="">
+      <div id="password-field" class="hidden">
+        <label for="connect-password" class="body-font mb-1.5 block text-xs font-medium text-zinc-500">Password</label>
+        <input id="connect-password" name="password" type="password" autocomplete="off" minlength="8"
+               class="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 body-font text-sm text-[#1A1020] outline-none transition-all focus:border-[#427AB5] focus:bg-white focus:ring-2 focus:ring-[#427AB5]/10">
+      </div>
+      <div class="flex items-center justify-between gap-3 pt-1">
+        <p id="connect-error" class="hidden body-font text-xs text-rose-600"></p>
+        <button type="submit"
+                class="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-[#427AB5] px-4 py-2.5 body-font text-xs font-semibold text-white transition-colors hover:bg-[#3A6DA0]">
+          {{ ui.icon("wifi", 14) }} Connect
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section id="status-panel"
+           class="hidden overflow-hidden rounded-2xl border border-zinc-200/70 bg-white"
+           data-initial-status="{{ connect_state.status }}"
+           data-initial-ssid="{{ connect_state.ssid or '' }}"
+           data-initial-message="{{ connect_state.message or '' }}">
+    <div class="flex items-center gap-3 px-4 py-4 sm:px-5">
+      <span id="status-icon" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sky-50 text-sky-600">
+        {{ ui.icon("refresh-cw", 16) }}
+      </span>
+      <div>
+        <h2 id="status-title" class="atlas-font text-[15px] font-black tracking-tight text-[#1A1020]">Connecting…</h2>
+        <p id="status-message" class="body-font mt-0.5 text-xs text-zinc-500"></p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var list = document.getElementById("network-list");
+  var panel = document.getElementById("connect-panel");
+  var title = document.getElementById("connect-title");
+  var ssidField = document.getElementById("connect-ssid");
+  var passwordField = document.getElementById("password-field");
+  var passwordInput = document.getElementById("connect-password");
+  var form = document.getElementById("connect-form");
+  var errorEl = document.getElementById("connect-error");
+  var statusPanel = document.getElementById("status-panel");
+  var statusTitle = document.getElementById("status-title");
+  var statusMessage = document.getElementById("status-message");
+  var statusIcon = document.getElementById("status-icon");
+  var pollTimer = null;
+
+  list.addEventListener("click", function (ev) {
+    var row = ev.target.closest(".network-row");
+    if (!row) return;
+    var ssid = row.dataset.ssid;
+    var secured = row.dataset.secured === "1";
+    ssidField.value = ssid;
+    title.textContent = "Connect to " + ssid;
+    passwordField.classList.toggle("hidden", !secured);
+    passwordInput.value = "";
+    errorEl.classList.add("hidden");
+    panel.classList.remove("hidden");
+    panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (secured) passwordInput.focus();
+  });
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    errorEl.classList.add("hidden");
+    var ssid = ssidField.value;
+    if (!ssid) return;
+    var body = new URLSearchParams();
+    body.set("ssid", ssid);
+    body.set("password", passwordInput.value);
+    fetch("/wifi-setup", { method: "POST", body: body })
+      .then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (data) {
+          return { ok: res.ok, data: data };
+        });
+      })
+      .then(function (result) {
+        if (!result.ok) {
+          errorEl.textContent = result.data.error || "Could not start connecting.";
+          errorEl.classList.remove("hidden");
+          return;
+        }
+        panel.classList.add("hidden");
+        showConnecting(ssid);
+        poll();
+      })
+      .catch(function () {
+        errorEl.textContent = "Network error — try again.";
+        errorEl.classList.remove("hidden");
+      });
+  });
+
+  function showConnecting(ssid) {
+    statusPanel.classList.remove("hidden");
+    statusIcon.className = "flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sky-50 text-sky-600";
+    statusTitle.textContent = "Connecting to " + ssid + "…";
+    statusMessage.textContent = "";
+  }
+
+  function showResult(state) {
+    var ok = state.status === "connected";
+    statusIcon.className = "flex h-9 w-9 shrink-0 items-center justify-center rounded-full " +
+      (ok ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700");
+    statusTitle.textContent = ok ? "Connected to " + state.ssid : "Couldn't connect to " + state.ssid;
+    statusMessage.textContent = state.message || "";
+    statusPanel.classList.remove("hidden");
+  }
+
+  function poll() {
+    clearTimeout(pollTimer);
+    fetch("/wifi-setup/status", { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("status check failed");
+        return res.json();
+      })
+      .then(function (state) {
+        if (state.status === "connecting") {
+          showConnecting(state.ssid);
+          pollTimer = setTimeout(poll, 2500);
+        } else if (state.status === "connected" || state.status === "failed") {
+          showResult(state);
+        }
+      })
+      .catch(function () {
+        pollTimer = setTimeout(poll, 3000);
+      });
+  }
+
+  var initialStatus = statusPanel.dataset.initialStatus;
+  if (initialStatus === "connecting") {
+    showConnecting(statusPanel.dataset.initialSsid);
+    poll();
+  } else if (initialStatus === "connected" || initialStatus === "failed") {
+    showResult({
+      status: initialStatus,
+      ssid: statusPanel.dataset.initialSsid,
+      message: statusPanel.dataset.initialMessage,
+    });
+  }
+})();
+</script>
+{% endblock %}
