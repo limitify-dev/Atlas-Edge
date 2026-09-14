@@ -20,6 +20,10 @@ def _no_real_rescan(monkeypatch):
     # scan_networks() always rescans first — skip the real subprocess call
     # and the 2s settle sleep so tests stay fast and offline.
     monkeypatch.setattr(wifi, "_maybe_rescan", lambda iface: None)
+    # connect() also does its own unconditional pre-connect rescan + sleep —
+    # tests that stub subprocess.run already control what that "rescan"
+    # returns, so just skip the real sleep to keep the suite fast.
+    monkeypatch.setattr(wifi.time, "sleep", lambda *_: None)
 
 
 def test_split_terse_handles_escaped_colon():
@@ -141,7 +145,7 @@ def test_connect_timeout_is_reported_as_failure_not_raised(monkeypatch):
     assert "somepass" not in message
 
 
-def test_connect_deletes_stale_profile_before_connecting(monkeypatch):
+def test_connect_rescans_then_deletes_stale_profile_then_connects(monkeypatch):
     calls = []
 
     def fake_run(cmd, **kwargs):
@@ -153,8 +157,9 @@ def test_connect_deletes_stale_profile_before_connecting(monkeypatch):
     monkeypatch.setattr(wifi.subprocess, "run", fake_run)
     ok, _ = wifi.connect("wlan0", "MySchool", "hunter22")
     assert ok is True
-    assert calls[0] == ["nmcli", "connection", "delete", "MySchool"]
-    assert calls[1][:4] == ["nmcli", "device", "wifi", "connect"]
+    assert calls[0] == ["nmcli", "device", "wifi", "rescan", "ifname", "wlan0"]
+    assert calls[1] == ["nmcli", "connection", "delete", "MySchool"]
+    assert calls[2][:4] == ["nmcli", "device", "wifi", "connect"]
 
 
 def test_connect_delete_failure_does_not_block_the_real_connect_attempt(monkeypatch):

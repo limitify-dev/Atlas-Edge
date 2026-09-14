@@ -144,6 +144,25 @@ def connect(iface: str, ssid: str, password: str) -> tuple[bool, str]:
     handler. Returns ``(ok, message)``; ``message`` is nmcli's own
     stdout/stderr and never contains ``password`` (nmcli doesn't echo
     submitted secrets back), so it's always safe to surface or log."""
+    # Force a fresh scan right before connecting. nmcli builds the new
+    # profile's security settings from whatever scan result it already has
+    # cached — if that's stale (the AP aged out of the cache between the
+    # user loading the page and actually submitting), nmcli can't detect
+    # the security type and leaves key-mgmt unset, producing the exact same
+    # "802-11-wireless-security.key-mgmt: property is missing" error a
+    # stale saved profile does. Unconditional (not the throttled
+    # _maybe_rescan used for listing) — a connect attempt is a deliberate,
+    # one-off action, not a repeated poll, so the cost of always rescanning
+    # here is trivial.
+    try:
+        subprocess.run(
+            ["nmcli", "device", "wifi", "rescan", "ifname", iface],
+            capture_output=True, timeout=_SCAN_TIMEOUT_SECONDS, check=False,
+        )
+        time.sleep(2)
+    except (OSError, subprocess.SubprocessError) as exc:
+        log.warning("pre-connect rescan on %s failed: %s", iface, exc)
+
     # nmcli names an auto-created wifi profile after the SSID by default,
     # and reuses an existing profile of that name rather than building a
     # fresh one. A stale/incomplete profile (e.g. one NM created just from
