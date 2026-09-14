@@ -1,0 +1,9 @@
+[Unit]
+Description=Atlas-Edge — ap0 admin hotspot health check (run by atlas-ap0-watchdog.timer)
+After=atlas-ap0-setup.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=/opt/atlas-edge/.env
+ExecStart=/opt/atlas-edge/atlas_edge/scripts/ap0_watchdog.sh
+# Same reasoning as atlas-ap0-setup.service — needs root for iw/ip/nmcli.

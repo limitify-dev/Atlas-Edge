@@ -1,0 +1,10 @@
+[Unit]
+Description=Periodically check the ap0 admin hotspot is still up
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=3min
+Unit=atlas-ap0-watchdog.service
+
+[Install]
+WantedBy=timers.target

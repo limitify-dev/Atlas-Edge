@@ -1,0 +1,28 @@
+[Unit]
+Description=Atlas-Edge — bring up the ap0 admin hotspot on wlan0
+After=NetworkManager.service network-online.target
+Wants=network-online.target
+# wlan0 (the USB adapter — the onboard Broadcom chip doesn't attach at boot)
+# needs to associate with the school network before ap0 can ride on top of
+# it. The script itself polls for that; this ordering just makes sure
+# NetworkManager is already up before the first attempt.
+StartLimitIntervalSec=600
+StartLimitBurst=5
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+EnvironmentFile=/opt/atlas-edge/.env
+ExecStart=/opt/atlas-edge/atlas_edge/scripts/ap0_setup.sh
+# wlan0 association can be slow/flaky right after boot — retry a few times
+# rather than giving up after one failed attempt.
+Restart=on-failure
+RestartSec=15
+
+# Deliberately NOT sandboxed like atlas-edge-web/listener: creating a
+# virtual wireless interface (iw), bringing it up (ip link), and driving
+# NetworkManager (nmcli) all need root — the unprivileged atlas-edge
+# service user can't do any of this.
+
+[Install]
+WantedBy=multi-user.target
