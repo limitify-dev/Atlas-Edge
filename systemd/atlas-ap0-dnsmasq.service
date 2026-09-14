@@ -1,0 +1,15 @@
+[Unit]
+Description=Atlas-Edge — dnsmasq (DHCP) for the ap0 admin hotspot
+After=atlas-ap0-hostapd.service
+BindsTo=atlas-ap0-setup.service
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/dnsmasq --no-daemon --conf-file=/etc/dnsmasq-atlas-ap0.conf
+Restart=on-failure
+RestartSec=5
+
+# Not enabled/started directly — atlas-ap0-setup.service (re)starts this
+# once /etc/dnsmasq-atlas-ap0.conf has been written. A dedicated instance,
+# scoped to ap0 only (bind-interfaces) — doesn't touch/replace any
+# system-wide dnsmasq/DHCP setup.

@@ -1,0 +1,15 @@
+[Unit]
+Description=Atlas-Edge — hostapd for the ap0 admin hotspot
+After=atlas-ap0-setup.service
+BindsTo=atlas-ap0-setup.service
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/hostapd /etc/hostapd/atlas-ap0.conf
+Restart=on-failure
+RestartSec=5
+
+# Not enabled/started directly — atlas-ap0-setup.service (re)starts this
+# once ap0 exists and /etc/hostapd/atlas-ap0.conf has been written. Not
+# sandboxed like atlas-edge-web/listener: driving the radio via nl80211
+# needs root.

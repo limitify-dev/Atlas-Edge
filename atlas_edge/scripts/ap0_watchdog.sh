@@ -2,7 +2,7 @@
 # Periodic health check for the Atlas-Edge admin hotspot (ap0) — run every
 # few minutes by systemd/atlas-ap0-watchdog.timer. Recovers from ap0
 # disappearing (e.g. the USB WiFi adapter reset and dropped its virtual
-# interfaces) or the hotspot connection dropping, without needing a reboot.
+# interfaces), or hostapd/dnsmasq dying, without needing a reboot.
 set -uo pipefail   # not -e: this script's whole job is to react to failures
 
 ENV_FILE="${ATLAS_EDGE_ENV_FILE:-/home/limitify/Developer/Atlas-Edge/.env}"
@@ -14,7 +14,6 @@ if [ -f "$ENV_FILE" ]; then
 fi
 
 HOTSPOT_IFACE="${ATLAS_EDGE_HOTSPOT_IFACE:-ap0}"
-HOTSPOT_CONN="${ATLAS_EDGE_HOTSPOT_CONN_NAME:-Atlas-Edge-Admin}"
 SETUP_SCRIPT="${ATLAS_EDGE_AP0_SETUP_SCRIPT:-/home/limitify/Developer/Atlas-Edge/atlas_edge/scripts/ap0_setup.sh}"
 
 log() {
@@ -26,27 +25,32 @@ iface_ok() {
   iw dev "$HOTSPOT_IFACE" info >/dev/null 2>&1
 }
 
-conn_active() {
-  nmcli -t -f NAME,STATE connection show --active 2>/dev/null \
-    | grep -Fxq "${HOTSPOT_CONN}:activated"
+hostapd_ok() {
+  systemctl is-active --quiet atlas-ap0-hostapd.service
 }
 
-if iface_ok && conn_active; then
-  log "OK — ${HOTSPOT_IFACE} exists and '${HOTSPOT_CONN}' is activated."
+dnsmasq_ok() {
+  systemctl is-active --quiet atlas-ap0-dnsmasq.service
+}
+
+if iface_ok && hostapd_ok && dnsmasq_ok; then
+  log "OK — ${HOTSPOT_IFACE} exists, hostapd and dnsmasq are active."
   exit 0
 fi
 
-log "Unhealthy — iface_ok=$(iface_ok && echo yes || echo no), conn_active=$(conn_active && echo yes || echo no). Attempting recovery…"
+log "Unhealthy — iface_ok=$(iface_ok && echo yes || echo no), hostapd_ok=$(hostapd_ok && echo yes || echo no), dnsmasq_ok=$(dnsmasq_ok && echo yes || echo no). Attempting recovery…"
 
-# Cheap fix first: the interface itself may still be fine, just the
-# connection dropped (e.g. NetworkManager restarted, or a client conflict).
+# Cheap fix first: the interface itself may still be fine, just one of the
+# supervised services crashed (systemd's Restart=on-failure should normally
+# catch this on its own, but try an explicit restart before the full setup).
 if iface_ok; then
-  log "Trying 'nmcli connection up ${HOTSPOT_CONN}' first…"
-  if nmcli connection up "$HOTSPOT_CONN" ifname "$HOTSPOT_IFACE" >/dev/null 2>&1; then
-    log "Recovered via nmcli connection up."
+  log "Trying to restart atlas-ap0-hostapd.service / atlas-ap0-dnsmasq.service first…"
+  if systemctl restart atlas-ap0-hostapd.service atlas-ap0-dnsmasq.service >/dev/null 2>&1 \
+     && hostapd_ok && dnsmasq_ok; then
+    log "Recovered via service restart."
     exit 0
   fi
-  log "Direct nmcli connection up failed."
+  log "Direct service restart failed."
 fi
 
 # Fall back to the full setup — handles ap0 having vanished entirely, and
@@ -57,5 +61,5 @@ if "$SETUP_SCRIPT"; then
   exit 0
 fi
 
-log "ERROR: recovery failed — both direct reconnect and full setup were unsuccessful. Manual intervention needed."
+log "ERROR: recovery failed — both service restart and full setup were unsuccessful. Manual intervention needed."
 exit 1
